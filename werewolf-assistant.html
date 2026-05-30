@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+<title>🐺 狼人杀发言助手 Pro</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+:root{--bg:#0d0d0d;--card:#1a1a2e;--card2:#16213e;--accent:#e94560;--accent2:#0f3460;--gold:#f0c040;--text:#e0e0e0;--dim:#888;--green:#2ecc71;--red:#e74c3c;--blue:#3498db;--purple:#9b59b6;--radius:12px;}
+body{font-family:'PingFang SC','Microsoft YaHei',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;}
+
+/* ===== SETUP ===== */
+#setup-screen{display:flex;flex-direction:column;align-items:center;padding:40px 20px;min-height:100vh;background:linear-gradient(135deg,#0d0d0d 0%,#1a1a2e 50%,#0d0d0d 100%);}
+#setup-screen h1{font-size:2em;margin-bottom:8px;color:var(--gold);}
+#setup-screen .subtitle{color:var(--dim);margin-bottom:30px;font-size:0.9em;}
+.setup-form{width:100%;max-width:420px;}
+.setup-form label{display:block;margin:16px 0 6px;font-size:0.9em;color:var(--dim);}
+.setup-form select,.setup-form input{width:100%;padding:12px 14px;border-radius:var(--radius);background:var(--card);color:var(--text);border:1px solid #333;font-size:1em;outline:none;}
+.setup-form select:focus,.setup-form input:focus{border-color:var(--accent);}
+.setup-form .btn-start{width:100%;margin-top:30px;padding:16px;border:none;border-radius:var(--radius);background:linear-gradient(135deg,var(--accent),#c0392b);color:#fff;font-size:1.2em;font-weight:bold;cursor:pointer;transition:.3s;}
+.setup-form .btn-start:hover{opacity:.9;transform:translateY(-2px);}
+.setup-form .apikey-note{font-size:0.75em;color:var(--dim);margin-top:8px;}
+.setup-form .btn-restore{width:100%;margin-top:12px;padding:12px;border:1px dashed #555;border-radius:var(--radius);background:transparent;color:var(--dim);font-size:0.9em;cursor:pointer;}
+.setup-form .btn-restore:hover{border-color:var(--accent);color:var(--accent);}
+
+/* ===== GAME SCREEN ===== */
+#game-screen{display:none;padding:12px;max-width:1100px;margin:0 auto;}
+.game-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;padding:12px;background:var(--card);border-radius:var(--radius);margin-bottom:12px;}
+.game-header .info{display:flex;gap:12px;flex-wrap:wrap;font-size:0.85em;}
+.game-header .info span{background:var(--card2);padding:4px 10px;border-radius:6px;}
+.game-header .info .myrole{color:var(--accent);font-weight:bold;}
+.game-header .info .myseat{color:var(--gold);font-weight:bold;}
+.game-header .round-ctrl{display:flex;gap:6px;align-items:center;}
+.game-header .round-ctrl button{padding:6px 12px;border:none;border-radius:6px;background:var(--accent2);color:#fff;cursor:pointer;font-size:0.85em;}
+.game-header .round-ctrl button:hover{opacity:.8;}
+.game-header .round-ctrl .round-num{font-weight:bold;font-size:1.1em;min-width:60px;text-align:center;}
+.game-header .phase-toggle{padding:6px 16px;border:none;border-radius:6px;cursor:pointer;font-weight:bold;font-size:0.85em;transition:.3s;}
+.phase-toggle.day{background:var(--gold);color:#000;}
+.phase-toggle.night{background:#2c3e50;color:#fff;}
+.game-header .btn-restart-game{padding:6px 12px;border:1px solid var(--accent);border-radius:6px;background:transparent;color:var(--accent);cursor:pointer;font-size:0.8em;}
+
+/* ===== PLAYER GRID ===== */
+.player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:12px;}
+.player-card{background:var(--card);border-radius:var(--radius);padding:8px;transition:.3s;position:relative;border:2px solid transparent;}
+.player-card.dead{opacity:.45;border-color:var(--red);}
+.player-card.dead::after{content:'💀';position:absolute;top:4px;right:6px;font-size:1em;}
+.player-card .seat-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:3px;}
+.player-card .seat{font-size:1.1em;font-weight:bold;color:var(--gold);}
+.player-card .seat .tag{font-size:0.5em;color:var(--dim);font-weight:normal;}
+.player-card .role-badge{font-size:0.6em;padding:2px 6px;border-radius:4px;white-space:nowrap;}
+.role-badge.unknown{background:#333;color:var(--dim);}
+.role-badge.claimed{background:#7f8c8d;color:#fff;}
+.role-badge.confirmed{background:var(--accent2);color:#fff;}
+.role-badge.wolf{background:#6b1a1a;color:#ff6b6b;}
+.role-badge.good{background:#1a4a2e;color:#2ecc71;}
+.player-card input.name{width:100%;padding:3px 6px;border:none;border-radius:4px;background:var(--card2);color:var(--text);font-size:0.7em;margin-bottom:3px;outline:none;}
+.player-card .role-row{display:flex;gap:4px;margin-bottom:3px;align-items:center;}
+.player-card .role-row select{flex:1;padding:2px 4px;border:none;border-radius:3px;background:var(--card2);color:var(--dim);font-size:0.63em;outline:none;cursor:pointer;appearance:auto;}
+.player-card .role-row select:focus{color:var(--text);}
+.player-card .role-row .btn-role-set{background:transparent;border:1px solid #444;border-radius:3px;color:var(--dim);padding:2px 5px;font-size:0.55em;cursor:pointer;white-space:nowrap;}
+.player-card .role-row .btn-role-set.active{background:var(--accent2);border-color:var(--accent2);color:#fff;}
+.player-card .role-row .btn-role-set.active2{background:var(--green);border-color:var(--green);color:#fff;}
+.player-card .speech-box{width:100%;height:48px;padding:5px;border:none;border-radius:4px;background:var(--card2);color:var(--text);font-size:0.65em;resize:vertical;outline:none;overflow-y:auto;line-height:1.4;min-height:30px;max-height:100px;margin-bottom:4px;}
+.player-card .actions{display:flex;gap:3px;flex-wrap:wrap;}
+.player-card .actions button{padding:3px 6px;border:none;border-radius:4px;cursor:pointer;font-size:0.63em;transition:.2s;flex:1;}
+.btn-record{background:var(--green);color:#fff;}
+.btn-record.recording{background:var(--red);animation:pulse 1s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.5}}
+.btn-toggle-dead{background:var(--dim);color:#fff;}
+.btn-clear-speech{background:#333;color:var(--dim);}
+.btn-record:disabled{opacity:.3;cursor:not-allowed;}
+
+/* ===== STATUS BAR ===== */
+.status-bar{display:flex;gap:12px;padding:8px 12px;background:var(--card);border-radius:var(--radius);margin-bottom:12px;font-size:0.8em;flex-wrap:wrap;align-items:center;}
+.status-bar .alive{color:var(--green);}
+.status-bar .dead-status{color:var(--red);}
+
+/* ===== ANALYSIS ===== */
+.analysis-section{background:var(--card);border-radius:var(--radius);padding:16px;margin-bottom:12px;}
+.analysis-section .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;flex-wrap:wrap;gap:8px;}
+.analysis-section .section-title h3{font-size:1em;}
+.analysis-section .section-title .btn-group{display:flex;gap:6px;}
+.analysis-section .section-title button{padding:8px 16px;border:none;border-radius:6px;background:linear-gradient(135deg,var(--accent),#c0392b);color:#fff;cursor:pointer;font-weight:bold;font-size:0.85em;}
+.analysis-section .section-title .btn-speech{background:linear-gradient(135deg,var(--gold),#d4a017);color:#000;}
+.analysis-section .section-title button:disabled{opacity:.4;cursor:not-allowed;}
+.analysis-section .section-title button.loading{animation:pulse 1s infinite;}
+.analysis-output{background:var(--card2);border-radius:8px;padding:12px;min-height:80px;max-height:450px;overflow-y:auto;font-size:0.85em;line-height:1.7;white-space:pre-wrap;}
+.analysis-output .placeholder{color:var(--dim);font-style:italic;}
+.analysis-output .thinking{color:var(--gold);}
+
+/* ===== SETTINGS BUTTON ===== */
+.btn-settings{position:fixed;bottom:20px;right:20px;width:50px;height:50px;border-radius:50%;border:none;background:var(--accent2);color:#fff;font-size:1.5em;cursor:pointer;box-shadow:0 4px 15px rgba(0,0,0,.5);z-index:100;display:none;}
+
+/* ===== MODAL ===== */
+.modal-overlay{display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center;}
+.modal-overlay.show{display:flex;}
+.modal-box{background:var(--card);border-radius:var(--radius);padding:24px;max-width:440px;width:90%;max-height:80vh;overflow-y:auto;}
+.modal-box h3{margin-bottom:16px;color:var(--gold);}
+.modal-box label{display:block;margin:12px 0 4px;font-size:0.85em;color:var(--dim);}
+.modal-box select,.modal-box input{width:100%;padding:10px 12px;border-radius:8px;background:var(--card2);color:var(--text);border:1px solid #333;font-size:1em;outline:none;}
+.modal-box .modal-actions{display:flex;gap:10px;margin-top:20px;}
+.modal-box .modal-actions button{flex:1;padding:10px;border:none;border-radius:8px;cursor:pointer;font-size:0.9em;}
+.modal-box .modal-actions .btn-save{background:var(--accent);color:#fff;}
+.modal-box .modal-actions .btn-cancel{background:#333;color:var(--dim);}
+
+/* ===== TOAST ===== */
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--card2);color:var(--text);padding:12px 24px;border-radius:8px;font-size:0.85em;z-index:300;opacity:0;transition:.3s;pointer-events:none;border:1px solid #333;}
+.toast.show{opacity:1;}
+
+/* ===== RESPONSIVE ===== */
+@media(max-width:600px){
+  .player-grid{grid-template-columns:repeat(3,1fr);gap:4px;}
+  .player-card{padding:5px;}
+  .player-card .speech-box{height:40px;font-size:0.6em;}
+  .player-card .seat{font-size:1em;}
+  .player-card input.name{font-size:0.65em;}
+  .game-header{flex-direction:column;align-items:stretch;}
+  .game-header .info{justify-content:center;}
+  .game-header .round-ctrl{justify-content:center;}
+  .analysis-output{font-size:0.8em;}
+  .player-card .role-row select{font-size:0.58em;}
+}
+@media(min-width:768px){.player-grid{grid-template-columns:repeat(4,1fr);}}
+@media(min-width:1024px){.player-grid{grid-template-columns:repeat(6,1fr);}}
+</style>
+</head>
+<body>
+
+<!-- ===== SETUP ===== -->
+<div id="setup-screen">
+  <h1>🐺 狼人杀发言助手 Pro</h1>
+  <p class="subtitle">AI 驱动 · 网易狼人杀全板子支持 · 身份关系分析</p>
+  <div class="setup-form">
+    <label>🎲 版型</label>
+    <select id="s-board"></select>
+
+    <label>🎭 我的身份</label>
+    <select id="s-role"></select>
+
+    <label>💺 我的号码牌</label>
+    <select id="s-seat"></select>
+
+    <label>🔑 DeepSeek API Key（已保存，无需重复填写）</label>
+    <input type="password" id="s-apikey" placeholder="自动填充已保存的 Key">
+    <p class="apikey-note" id="apikey-status">API Key 保存在本地浏览器，关闭页面不会丢失</p>
+
+    <label>🐺 狼队友号码（你是狼人时填写）</label>
+    <input type="text" id="s-wolf-teammates" placeholder="如: 3,7,11">
+
+    <button class="btn-start" onclick="startGame()">🎮 开始游戏</button>
+    <button class="btn-restore" onclick="restoreGame()" id="btn-restore" style="display:none">📂 恢复上一局</button>
+  </div>
+</div>
+
+<!-- ===== GAME ===== -->
+<div id="game-screen">
+  <div class="game-header">
+    <div class="info">
+      <span>🎲 <span id="g-board"></span></span>
+      <span class="myrole" id="g-role"></span>
+      <span class="myseat" id="g-seat"></span>
+    </div>
+    <div class="round-ctrl">
+      <button onclick="changeRound(-1)">◀</button>
+      <span class="round-num" id="g-round">第1轮 白天</span>
+      <button onclick="changeRound(1)">▶</button>
+      <button class="phase-toggle day" id="g-phase-btn" onclick="togglePhase()">🌙 入夜</button>
+      <button class="btn-restart-game" onclick="confirmRestart()">🔄 新一局</button>
+    </div>
+  </div>
+
+  <div class="status-bar" id="status-bar"></div>
+  <div class="player-grid" id="player-grid"></div>
+
+  <div class="analysis-section">
+    <div class="section-title">
+      <h3>🧠 AI 分析 & 发言稿</h3>
+      <div class="btn-group">
+        <button onclick="quickAnalysis('分析')" id="btn-analyze" style="background:linear-gradient(135deg,var(--accent2),#1a6da0)">📊 分析局势</button>
+        <button onclick="quickAnalysis('发言')" id="btn-speech" class="btn-speech">🎤 生成发言稿</button>
+      </div>
+    </div>
+    <div class="analysis-output" id="analysis-output">
+      <div class="placeholder">点击「分析局势」获取局势推理，或「生成发言稿」获得本轮的发言建议。</div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== SETTINGS ===== -->
+<button class="btn-settings" onclick="openSettings()" id="settings-btn">⚙️</button>
+<div class="modal-overlay" id="settings-modal">
+  <div class="modal-box">
+    <h3>⚙️ 设置</h3>
+    <label>当前轮次</label>
+    <select id="m-round"></select>
+    <label>DeepSeek API Key</label>
+    <input type="password" id="m-apikey" placeholder="sk-...">
+    <label>狼队友号码</label>
+    <input type="text" id="m-wolf-teammates" placeholder="如: 3,7,11">
+    <div class="modal-actions">
+      <button class="btn-save" onclick="saveSettings()">保存</button>
+      <button class="btn-cancel" onclick="closeSettings()">取消</button>
+    </div>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+// ===================================================================
+// BOARDS
+// ===================================================================
+const BOARDS = [
+  {name:'预女猎白 (经典)',players:12},
+  {name:'狼王守卫',players:12},{name:'狼王魔术师',players:12},
+  {name:'石像鬼守墓人',players:12},{name:'血月使徒',players:12},
+  {name:'噩梦之影',players:12},{name:'蚀日侍女',players:12},
+  {name:'咒狐',players:12},{name:'熊猫 (熊)',players:12},
+  {name:'花蝴蝶',players:12},{name:'机械狼',players:12},
+  {name:'狼美人骑士',players:12},{name:'白狼王骑士',players:12},{name:'白狼王愚者骑士',players:12},
+  {name:'潜行者',players:12},{name:'摄梦人',players:12},
+  {name:'时波之女/时波操纵者',players:12},{name:'丘比特',players:12},
+  {name:'种狼',players:12},{name:'变脸者',players:12},
+  {name:'蛊惑师',players:12},{name:'9人局 (预女猎)',players:9},
+  {name:'6人局 (简单)',players:6},
+];
+const ALL_ROLES = [
+  {cat:'未知',roles:['未知']},
+  {cat:'神职 (好人)',roles:['预言家','女巫','猎人','白痴','守卫','骑士','魔术师','守墓人','摄梦人','潜行者','熊(熊猫)','花蝴蝶','时波操纵者','蛊惑师','变脸者','丘比特','驯熊师','灵媒师']},
+  {cat:'平民 (好人)',roles:['平民']},
+  {cat:'狼人阵营',roles:['狼人','狼王','白狼王','狼美人','石像鬼','血月使徒','噩梦之影','机械狼','蚀日侍女','种狼','时波之女','狼鸦之爪']},
+  {cat:'第三方',roles:['咒狐','混血儿']},
+];
+const ALL_ROLE_NAMES = ALL_ROLES.flatMap(g=>g.roles);
+const GOOD_ROLE_NAMES = ['平民','预言家','女巫','猎人','白痴','守卫','骑士','魔术师','守墓人','摄梦人','潜行者','熊(熊猫)','花蝴蝶','时波操纵者','蛊惑师','变脸者','丘比特','驯熊师','灵媒师'];
+const WOLF_ROLE_NAMES = ['狼人','狼王','白狼王','狼美人','石像鬼','血月使徒','噩梦之影','机械狼','蚀日侍女','种狼','时波之女','狼鸦之爪'];
+const THIRD_ROLE_NAMES = ['咒狐','混血儿'];
+function isWolfRole(r){return WOLF_ROLE_NAMES.includes(r);}
+function isGoodRole(r){return GOOD_ROLE_NAMES.includes(r);}
+
+// ===================================================================
+// ROLE ABILITIES DATABASE — AI uses this for logical reasoning
+// ===================================================================
+const ROLE_ABILITIES = {
+  // --- 神职 ---
+  '预言家':'每晚可查验一人的阵营（好人/狼人），是整个好人阵营的信息核心。',
+  '女巫':'拥有解药和毒药各一瓶。每晚得知当晚被狼人杀害的玩家，可用解药救活；可用毒药毒杀任意一名玩家（毒药不能与解药同夜使用）。',
+  '猎人':'出局时可以开枪带走任意一名玩家。但如果被女巫毒杀则无法开枪。',
+  '白痴':'如果被投票放逐，可以翻牌亮明身份，之后不再被放逐但失去投票权。',
+  '愚者':'同"白痴"——被投票放逐可翻牌存活，但失去投票权。',
+  '守卫':'每晚可守护一名玩家免受狼人袭击。但不能连续两晚守护同一人。守护和女巫的解药同时使用时该玩家会死亡（同守同救死）。',
+  '骑士':'白天可以选择一名玩家发起决斗。如果对方是狼人则狼人死亡；如果对方是好人则骑士死亡，决斗后该玩家身份公开。',
+  '魔术师':'每晚可以交换两名玩家的号码牌（狼人袭击和预言家查验都会作用到交换后的目标）。',
+  '守墓人':'每次天亮后可以得知上一个白天被放逐的玩家的具体阵营（好人/狼人）。',
+  '摄梦人':'每晚选择一名玩家成为"梦游者"。如果摄梦人当晚死亡，梦游者也会随之死亡。连续两晚选择同一人会使其死亡。',
+  '潜行者':'如果白天投票时你的票投给了一名没有被放逐的玩家，当晚你可以对该玩家发动技能使其出局。',
+  '熊(熊猫)':'每天天亮时，如果左右相邻的玩家中有狼人，则会咆哮（提示）。如果相邻无狼人则不会咆哮。',
+  '花蝴蝶':'每晚可以"拥抱"一名玩家，被拥抱的玩家的技能当晚无效。如果花蝴蝶被狼人杀害，被拥抱的玩家也会一起死亡。',
+  '时波操纵者':'好人阵营。可根据时波波动感知是否有狼人干扰了时间线。',
+  '蛊惑师':'好人阵营。可以迷惑一名玩家，使该玩家在投票时投给蛊惑师指定的目标。',
+  '变脸者':'好人阵营。拥有三个身份（三个普通技能），每晚可以选择使用其中一个技能。',
+  '丘比特':'在第一晚选择两名玩家成为"情侣"。如果其中一人死亡，另一人也会殉情而死。情侣如果是一狼一好人则成为"第三方"，目标是让场上只剩自己和情侣存活。',
+  '驯熊师':'类似熊——每天公布身边是否有狼人。',
+  '灵媒师':'可以感知到灵魂信息。',
+  // --- 平民 ---
+  '平民':'没有特殊技能，但拥有投票权。是好人阵营的重要成员，也是狼人最容易伪装的身份。',
+  // --- 狼人阵营 ---
+  '狼人':'每晚可以和其他狼人一起选择一名玩家击杀。白天隐藏身份，伪装成好人发言。',
+  '狼王':'狼人阵营。除普通狼人的刀人能力外，被投票放逐时可以开枪带走一名玩家（被毒杀不能开枪）。',
+  '白狼王':'狼人阵营。白天可以自爆，带走任意一名玩家并直接进入黑夜。',
+  '狼美人':'狼人阵营。每晚可以"魅惑"一名玩家。当狼美人被投票放逐或枪杀时，被魅惑的玩家也会一起死亡。',
+  '石像鬼':'狼人阵营但与其他狼人不互知身份（不能夜间交流）。每晚可查验一名玩家的具体身份（不仅阵营，而是确切角色）。',
+  '血月使徒':'狼人阵营。如果被投票放逐，可以在下一夜发动技能使好人的技能全部失效（平安夜）。也可以选择白天自爆。',
+  '噩梦之影':'狼人阵营。每晚可以"恐惧"一名玩家，被恐惧的玩家当夜无法使用技能。',
+  '机械狼':'狼人阵营。可以学习一名已死亡玩家的技能并使用一次。',
+  '蚀日侍女':'狼人阵营。预言家查验时显示为好人。拥有特殊屏蔽能力。',
+  '种狼':'狼人阵营。可以选择不刀人，改为感染一名好人使其变成狼人（同守同救等规则适用）。',
+  '时波之女':'狼人阵营。可以干扰时波操纵者的感知，隐藏队友踪迹。',
+  '狼鸦之爪':'狼人阵营。拥有锋利的爪子，在特定条件下可以多刀一人。',
+  // --- 第三方 ---
+  '咒狐':'第三方阵营。被预言家查验时显示为好人。获胜条件：咒狐存活到游戏结束即单独获胜（与好人/狼人无关）。',
+  '混血儿':'第三方阵营。第一晚选择一名玩家作为"崇拜对象"。目标是让崇拜对象获胜。如果崇拜对象是好人则帮好人，是狼人则帮狼人。',
+};
+function getRoleKnowledgeText(){
+  let t='【各身份技能说明——AI推理的知识库】\n';
+  const roles=Object.keys(ROLE_ABILITIES).sort();
+  for(const r of roles)t+=`${r}：${ROLE_ABILITIES[r]}\n`;
+  return t;
+}
+
+// ===================================================================
+// STATE
+// ===================================================================
+let state = {
+  board:'',myRole:'',mySeat:0,totalPlayers:12,
+  round:1,phase:'day',players:{},apiKey:'',
+  wolfTeammates:[],gameStarted:false,
+};
+let gameRoundSelects = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15];
+
+// ===================================================================
+// INIT SETUP UI
+// ===================================================================
+function populateBoards(){
+  const sel=document.getElementById('s-board');
+  sel.innerHTML=BOARDS.map(b=>`<option value="${b.name}">${b.name} (${b.players}人)</option>`).join('');
+}
+function populateRoles(){
+  const sel=document.getElementById('s-role');
+  sel.innerHTML='';
+  for(const g of ALL_ROLES){
+    if(g.roles.length===0)continue;
+    const og=document.createElement('optgroup');
+    og.label=g.cat;
+    for(const r of g.roles){
+      const o=document.createElement('option');
+      o.value=r;o.textContent=r;
+      og.appendChild(o);
+    }
+    sel.appendChild(og);
+  }
+}
+function populateSeats(){
+  const sel=document.getElementById('s-seat');
+  sel.innerHTML='';
+  for(let i=1;i<=18;i++){
+    const o=document.createElement('option');
+    o.value=i;o.textContent=i+'号';
+    sel.appendChild(o);
+  }
+}
+populateBoards();populateRoles();populateSeats();
+
+// ===================================================================
+// API KEY PERSISTENCE (separate from game state)
+// ===================================================================
+function loadApiKey(){
+  try{return localStorage.getItem('werewolf_apikey')||'';}catch(e){return '';}
+}
+function saveApiKey(key){
+  try{localStorage.setItem('werewolf_apikey',key);}catch(e){}
+}
+// Auto-fill API key on setup
+document.getElementById('s-apikey').value=loadApiKey();
+if(loadApiKey()) document.getElementById('apikey-status').textContent='✅ API Key 已加载（保存于浏览器本地）';
+
+// ===================================================================
+// GAME STATE PERSISTENCE
+// ===================================================================
+function saveGame(){
+  try{
+    const data={board:state.board,myRole:state.myRole,mySeat:state.mySeat,totalPlayers:state.totalPlayers,round:state.round,phase:state.phase,players:state.players,wolfTeammates:state.wolfTeammates,gameStarted:true};
+    localStorage.setItem('werewolf_game',JSON.stringify(data));
+  }catch(e){}
+}
+function loadGame(){
+  try{const r=localStorage.getItem('werewolf_game');return r?JSON.parse(r):null;}catch(e){return null;}
+}
+function clearGame(){localStorage.removeItem('werewolf_game');}
+
+// ===================================================================
+// PLAYER INIT
+// ===================================================================
+function initPlayers(total){
+  const p={};
+  for(let i=1;i<=total;i++){
+    p[i]={name:'',speeches:[],alive:true,deadRound:0,deadCause:'',roleStatus:'unknown',role:''};
+  }
+  return p;
+}
+
+function checkRestore(){
+  const s=loadGame();
+  document.getElementById('btn-restore').style.display=(s&&s.gameStarted)?'block':'none';
+}
+checkRestore();
+
+// ===================================================================
+// START / RESTORE
+// ===================================================================
+function startGame(){
+  const board=document.getElementById('s-board').value;
+  const role=document.getElementById('s-role').value;
+  const seat=parseInt(document.getElementById('s-seat').value);
+  const apikey=document.getElementById('s-apikey').value.trim();
+  const teammates=document.getElementById('s-wolf-teammates').value.trim();
+  const b=BOARDS.find(b=>b.name===board);
+  const total=b?b.players:12;
+  if(!apikey){showToast('请输入 DeepSeek API Key');return;}
+  saveApiKey(apikey);
+  state.board=board;state.myRole=role;state.mySeat=seat;
+  state.totalPlayers=total;state.round=1;state.phase='day';
+  state.apiKey=apikey;
+  state.wolfTeammates=teammates?teammates.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n)):[];
+  state.players=initPlayers(total);
+  state.gameStarted=true;
+  saveGame();
+  renderGame();
+}
+
+function restoreGame(){
+  const saved=loadGame();
+  if(!saved)return;
+  state=saved;
+  // Re-fill API key
+  const savedKey=loadApiKey();
+  if(savedKey)state.apiKey=savedKey;
+  renderGame();
+}
+
+// ===================================================================
+// RENDER GAME
+// ===================================================================
+function renderGame(){
+  document.getElementById('setup-screen').style.display='none';
+  document.getElementById('game-screen').style.display='block';
+  document.getElementById('settings-btn').style.display='flex';
+  document.getElementById('g-board').textContent=state.board;
+  document.getElementById('g-role').textContent='🎭 '+state.myRole;
+  document.getElementById('g-seat').textContent='💺 '+state.mySeat+'号';
+  // Build round select
+  const maxR=Math.max(state.round+5,15);
+  gameRoundSelects=[];
+  for(let i=1;i<=maxR;i++)gameRoundSelects.push(i);
+  const ms=document.getElementById('m-round');
+  ms.innerHTML=gameRoundSelects.map(r=>`<option value="${r}"${r===state.round?' selected':''}>第${r}轮</option>`).join('');
+  updateRoundDisplay();
+  renderPlayers();
+  updateStatusBar();
+  saveGame();
+}
+
+function updateRoundDisplay(){
+  const pt=state.phase==='day'?'☀️ 白天':'🌙 夜晚';
+  document.getElementById('g-round').textContent=`第${state.round}轮 ${pt}`;
+  const btn=document.getElementById('g-phase-btn');
+  btn.textContent=state.phase==='day'?'🌙 入夜':'☀️ 天亮';
+  btn.className='phase-toggle '+state.phase;
+}
+
+// ===================================================================
+// PLAYERS RENDER
+// ===================================================================
+function renderPlayers(){
+  const grid=document.getElementById('player-grid');
+  grid.innerHTML='';
+  const seats=Object.keys(state.players).map(Number).sort((a,b)=>a-b);
+  for(const seat of seats){
+    const p=state.players[seat];
+    const isMe=seat===state.mySeat;
+
+    // Build role display
+    let roleBadge='';
+    if(p.role && p.roleStatus!=='unknown'){
+      const cls=p.roleStatus==='confirmed'?'confirmed':'claimed';
+      const catCls=isWolfRole(p.role)?'wolf':(isGoodRole(p.role)?'good':'');
+      const label=p.roleStatus==='confirmed'?'✓':'?';
+      roleBadge=`<span class="role-badge ${cls} ${catCls}">${label} ${p.role}</span>`;
+    }else{
+      roleBadge=`<span class="role-badge unknown">❓未知</span>`;
+    }
+
+    // Speech display
+    const speeches=p.speeches.map(s=>`[${s.phase==='day'?'白天':'夜晚'}R${s.round}] ${s.text}`).join('\n');
+
+    // Role select options
+    const roleOpts=ALL_ROLE_NAMES.map(r=>`<option value="${r}"${p.role===r?' selected':''}>${r}</option>`).join('');
+
+    const card=document.createElement('div');
+    card.className='player-card'+(p.alive?'':' dead');
+    card.id='pcard-'+seat;
+    card.innerHTML=`
+      <div class="seat-row">
+        <span class="seat">${seat}号 ${isMe?'<span class="tag">👤我</span>':''}</span>
+        ${roleBadge}
+      </div>
+      <input class="name" id="pname-${seat}" placeholder="昵称" value="${p.name||''}" oninput="updatePlayerName(${seat},this.value)" ${isMe?'readonly':''}>
+      <div class="role-row">
+        <select id="prole-${seat}" onchange="onRoleChange(${seat})">${roleOpts}</select>
+        <button class="btn-role-set" id="prolebtn-${seat}" onclick="cycleRoleStatus(${seat})">❓未知</button>
+      </div>
+      <textarea class="speech-box" id="pspeech-${seat}" placeholder="${isMe?'我的发言（自动填充AI发言稿）':'🎤点击下方录制键'}" oninput="updatePlayerSpeech(${seat},this.value)">${speeches}</textarea>
+      <div class="actions">
+        <button class="btn-record" id="prec-${seat}" onclick="toggleRecording(${seat})" ${(!p.alive||isMe)?'disabled':''}>🎤录</button>
+        <button class="btn-toggle-dead" onclick="toggleDead(${seat})" ${isMe?'disabled':''}>${p.alive?'💀死':'🔄活'}</button>
+        <button class="btn-clear-speech" onclick="clearPlayerSpeech(${seat})">🗑️</button>
+      </div>
+    `;
+    grid.appendChild(card);
+  }
+}
+
+function updateStatusBar(){
+  const alive=[],dead=[];
+  const roles=[];
+  for(const [s,p]of Object.entries(state.players)){
+    if(p.alive)alive.push(s);
+    else dead.push(s);
+    if(p.role && p.roleStatus==='confirmed')roles.push(`${s}号=${p.role}`);
+  }
+  let extra='';
+  if(roles.length)extra=` | 📋已确认: ${roles.join(', ')}`;
+  document.getElementById('status-bar').innerHTML=`
+    <span class="alive">🟢存活: ${alive.join(',')||'无'}</span>
+    <span class="dead-status">💀阵亡: ${dead.join(',')||'无'}${extra}</span>
+  `;
+}
+
+// ===================================================================
+// GAME CONTROLS
+// ===================================================================
+function changeRound(delta){
+  const nr=state.round+delta;
+  if(nr<1)return;
+  state.round=nr;
+  updateRoundDisplay();
+  saveGame();
+}
+function togglePhase(){
+  state.phase=state.phase==='day'?'night':'day';
+  updateRoundDisplay();
+  saveGame();
+}
+function updatePlayerName(seat,val){
+  state.players[seat].name=val;
+  saveGame();
+}
+function updatePlayerSpeech(seat,val){
+  if(!state.players[seat])return;
+  // For manual edits store as special entry
+  const existing=state.players[seat].speeches.find(s=>s.round===0);
+  if(existing)existing.text=val;
+  else state.players[seat].speeches.push({round:0,phase:'manual',text:val});
+  saveGame();
+}
+function toggleDead(seat){
+  const p=state.players[seat];
+  p.alive=!p.alive;
+  if(!p.alive){p.deadRound=state.round;p.deadCause=state.phase==='day'?'白天放逐':'夜晚阵亡';}
+  renderPlayers();
+  updateStatusBar();
+  saveGame();
+}
+function clearPlayerSpeech(seat){
+  state.players[seat].speeches=[];
+  document.getElementById('pspeech-'+seat).value='';
+  saveGame();
+}
+function onRoleChange(seat){
+  const sel=document.getElementById('prole-'+seat);
+  const role=sel.value;
+  const p=state.players[seat];
+  if(role==='未知'){p.role='';p.roleStatus='unknown';}
+  else {p.role=role; if(p.roleStatus==='unknown')p.roleStatus='claimed';}
+  renderPlayers();
+  updateStatusBar();
+  saveGame();
+}
+function cycleRoleStatus(seat){
+  const p=state.players[seat];
+  if(p.roleStatus==='unknown'||!p.role){p.roleStatus='claimed';}
+  else if(p.roleStatus==='claimed'){p.roleStatus='confirmed';}
+  else {p.role='';p.roleStatus='unknown';}
+  renderPlayers();
+  updateStatusBar();
+  saveGame();
+}
+
+// ===================================================================
+// RESTART (new game)
+// ===================================================================
+function confirmRestart(){
+  if(!confirm('确定要结束当前对局并开始新一局吗？\n当前发言记录将被清空。'))return;
+  clearGame();
+  document.getElementById('game-screen').style.display='none';
+  document.getElementById('setup-screen').style.display='flex';
+  document.getElementById('settings-btn').style.display='none';
+  document.getElementById('btn-restore').style.display='none';
+  // Pre-fill API key on setup
+  document.getElementById('s-apikey').value=loadApiKey();
+  showToast('已清空数据，可以开始新一局');
+}
+
+// ===================================================================
+// SPEECH RECOGNITION
+// ===================================================================
+let currentRecorder=null,currentSeat=null;
+function toggleRecording(seat){
+  if(currentSeat===seat&&currentRecorder){stopRecording();return;}
+  if(currentRecorder){
+    try{currentRecorder.stop();}catch(e){}
+    const pb=document.getElementById('prec-'+currentSeat);
+    if(pb){pb.textContent='🎤录';pb.classList.remove('recording');}
+  }
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){showToast('浏览器不支持语音识别，请用 Android Chrome');return;}
+  currentRecorder=new SR();
+  currentRecorder.lang='zh-CN';
+  currentRecorder.continuous=true;
+  currentRecorder.interimResults=true;
+  currentSeat=seat;
+  const btn=document.getElementById('prec-'+seat);
+  btn.textContent='⏹️停';btn.classList.add('recording');
+  let finalText='';
+  currentRecorder.onresult=(ev)=>{
+    let interim='',final='';
+    for(let i=ev.resultIndex;i<ev.results.length;i++){
+      const t=ev.results[i][0].transcript;
+      if(ev.results[i].isFinal){final+=t;finalText+=t;}
+      else interim+=t;
+    }
+    const p=state.players[seat];
+    const ex=p.speeches.filter(s=>s.round!==-1).map(s=>`[${s.phase==='day'?'白天':'夜晚'}R${s.round}] ${s.text}`).join('\n');
+    const disp=ex+(final||interim?`\n[🎤录制中] ${finalText}${interim?'('+interim+')':''}`:'');
+    const ta=document.getElementById('pspeech-'+seat);
+    ta.value=disp;ta.scrollTop=ta.scrollHeight;
+  };
+  currentRecorder.onerror=(ev)=>{
+    showToast('录音错误: '+ev.error+' 请授权麦克风');
+    const b=document.getElementById('prec-'+seat);if(b){b.textContent='🎤录';b.classList.remove('recording');}
+    currentRecorder=null;currentSeat=null;
+  };
+  currentRecorder.onend=()=>{
+    if(finalText.trim()){
+      state.players[seat].speeches.push({round:state.round,phase:state.phase,text:finalText.trim()});
+      saveGame();
+      const p=state.players[seat];
+      const all=p.speeches.map(s=>`[${s.phase==='day'?'白天':'夜晚'}R${s.round}] ${s.text}`).join('\n');
+      document.getElementById('pspeech-'+seat).value=all;
+    }
+    const b=document.getElementById('prec-'+seat);if(b){b.textContent='🎤录';b.classList.remove('recording');}
+    currentRecorder=null;currentSeat=null;
+  };
+  try{currentRecorder.start();showToast(`🎤 录制 ${seat}号的发言...`);}
+  catch(e){showToast('启动录音失败');btn.textContent='🎤录';btn.classList.remove('recording');currentRecorder=null;currentSeat=null;}
+}
+function stopRecording(){
+  if(currentRecorder){
+    try{currentRecorder.stop();}catch(e){}
+    const b=document.getElementById('prec-'+currentSeat);if(b){b.textContent='🎤录';b.classList.remove('recording');}
+    currentRecorder=null;currentSeat=null;
+  }
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&currentRecorder){stopRecording();showToast('录音已停止');}});
+
+// ===================================================================
+// DEEPSEEK PROMPT — enhanced with role awareness
+// ===================================================================
+function buildPrompt(mode){
+  const isWolf=isWolfRole(state.myRole);
+  const alive=Object.entries(state.players).filter(([s,p])=>p.alive).map(([s])=>Number(s)).sort((a,b)=>a-b);
+  const dead=Object.entries(state.players).filter(([s,p])=>!p.alive).map(([s])=>Number(s)).sort((a,b)=>a-b);
+  const wolfTeammates=state.wolfTeammates.length?state.wolfTeammates.join(', '):'无';
+
+  // Build player info with roles
+  let playerInfo='';
+  const sorted=Object.keys(state.players).map(Number).sort((a,b)=>a-b);
+  for(const s of sorted){
+    const p=state.players[s];
+    const tag=s===state.mySeat?' (我)':'';
+    const name=p.name?`(${p.name})`:'';
+    let roleStr='';
+    if(s===state.mySeat){
+      roleStr=`身份: ${state.myRole}${isWolf?'(狼人)':'(好人)'}`;
+    }else if(p.roleStatus==='confirmed'){
+      roleStr=`已知身份: ${p.role} (已确认)`;
+    }else if(p.roleStatus==='claimed'){
+      roleStr=`自称: ${p.role} (自称，待验证)`;
+    }else{
+      roleStr='身份: 未知';
+    }
+    const status=p.alive?'存活':'💀阵亡(R'+p.deadRound+')';
+    playerInfo+=`【${s}号${tag}${name}】${roleStr} | ${status}\n`;
+
+    if(p.speeches.length>0){
+      for(const sp of p.speeches){
+        if(sp.round===0)continue;
+        playerInfo+=`  发言[第${sp.round}轮 ${sp.phase==='day'?'白天':'夜晚'}]: ${sp.text}\n`;
+      }
+    }else{
+      playerInfo+=`  暂无发言记录\n`;
+    }
+    playerInfo+='\n';
+  }
+
+const roleKnowledge = getRoleKnowledgeText();
+  let systemPrompt,userPrompt;
+
+  if(mode==='分析'){
+    systemPrompt='你是狼人杀顶级逻辑分析师。根据发言逻辑、身份关系和场上局势，给出深度分析。分析要具体，引用玩家原话作为证据。\n\n'+roleKnowledge;
+    if(isWolf){
+      userPrompt=`=== 版型：${state.board} ===
+=== 我：${state.mySeat}号，${state.myRole}（狼人阵营）===
+=== 狼队友：${wolfTeammates} ===
+=== 当前：第${state.round}轮 ${state.phase==='day'?'白天':'夜晚'} ===
+
+=== 玩家信息 ===
+${playerInfo}
+
+请分析：
+1. 【好人阵营漏洞】找出每个好人与发言的矛盾点，哪个好人最容易被打成抗推位？
+2. 【神职定位】根据发言，谁最可能是预言家/女巫/猎人？谁在装神？
+3. 【站边与格局】目前好人形成了什么逻辑闭环？从哪里可以撕开口子？
+4. 【狼队友配合】狼队友之间应该如何配合？要不要冲票/倒钩/煽动？
+5. 【风险提示】我哪里可能露馅了？发言中需要注意什么？`;
+    } else {
+      const myCamp=isWolfRole(state.myRole)?'狼人':'好人';
+      userPrompt=`=== 版型：${state.board} ===
+=== 我：${state.mySeat}号，${state.myRole}（${myCamp}阵营）===
+=== 当前：第${state.round}轮 ${state.phase==='day'?'白天':'夜晚'} ===
+
+=== 玩家信息 ===
+${playerInfo}
+
+请分析：
+1. 【狼坑定位】按狼面从大到小排序，每个给出推理依据，引用具体发言。
+2. 【对立关系】哪些玩家之间有明显对立关系？谁在互保/互踩？
+3. 【逻辑矛盾】找出发言中的前后矛盾、逻辑断裂、时间线冲突。
+4. 【身份判断】根据发言和站边，谁像真预言家？谁可能在悍跳？
+5. 【票型建议】今天应该出谁？理由是什么？`;
+    }
+  } else {
+    // 发言稿
+    if(isWolf){
+      systemPrompt='你是狼人杀伪装专家。帮狼人玩家写一份自然的发言稿，让他听起来像一个真正的好人。不要用模板化语言，要有真实玩家的口语感、犹豫、强调和节奏。要给出具体的逻辑攻击点（引用其他玩家的发言漏洞）。\n\n'+roleKnowledge;
+      userPrompt=`=== 版型：${state.board} ===
+=== 我：${state.mySeat}号，${state.myRole}（狼人阵营）===
+=== 狼队友：${wolfTeammates} ===
+=== 当前：第${state.round}轮 ${state.phase==='day'?'白天':'夜晚'} ===
+
+=== 玩家信息 ===
+${playerInfo}
+
+请注意场上已确认的身份信息（例如某玩家已经翻牌为某身份），这些是铁事实，我的发言不能与已确认身份冲突。
+
+请生成一份完整的发言方案：
+
+1.【身份建议】建议我跳什么身份？为什么选这个身份？（考虑已翻牌和已跳的身份，不要冲突）
+
+2.【攻击目标】具体攻击哪个玩家？引用他发言中的原话漏洞
+
+3.【完整发言稿】一段可以直接说的发言，要求：
+   - 以"${state.mySeat}号玩家发言"开头
+   - 如果是悍跳预言家：给出查验+警徽流+心路历程
+   - 如果是平民：站边要清晰，逻辑要自洽
+   - 如果前置位没什么信息可以说"这轮前面没听到什么有价值的，过了"
+   - 口语化、自然、有停顿感
+   - 融入场上已确认的身份信息`;
+    } else {
+      systemPrompt='你是狼人杀顶尖发言玩家。帮好人写一份有说服力的发言稿，逻辑严密、针对性强，能说服其他好人一起投票。要引用具体玩家的发言作为论据，不要空泛。\n\n'+roleKnowledge;
+      userPrompt=`=== 版型：${state.board} ===
+=== 我：${state.mySeat}号，${state.myRole}（好人阵营）===
+=== 当前：第${state.round}轮 ${state.phase==='day'?'白天':'夜晚'} ===
+
+=== 玩家信息 ===
+${playerInfo}
+
+请注意场上已确认的身份信息（翻牌、死亡公布等），这些是铁逻辑基础。
+
+请生成一份完整的发言方案：
+
+1.【局势理解】一句话总结当前格局
+
+2.【逻辑核心】我最大的逻辑抓手是什么？
+
+3.【完整发言稿】一段可以直接说的发言，要求：
+   - 以"${state.mySeat}号玩家发言"开头
+   - 如果是预言家：说清楚查验+警徽流+为什么验他
+   - 如果是女巫：说明用药情况（或模糊处理）
+   - 如果是平民/其他神：站边+理由+打谁
+   - 引用具体玩家的具体发言作为论据
+   - 融入场上已确认的身份信息`;
+    }
+  }
+  return {system:systemPrompt,user:userPrompt};
+}
+
+// ===================================================================
+// DEEPSEEK API CALL
+// ===================================================================
+async function callDeepSeek(mode){
+  const btnA=document.getElementById('btn-analyze');
+  const btnS=document.getElementById('btn-speech');
+  btnA.disabled=true;btnS.disabled=true;btnA.classList.add('loading');
+  const output=document.getElementById('analysis-output');
+  output.innerHTML='<div class="thinking">🤔 AI 正在分析场上局势和身份关系，请稍候...</div>';
+
+  const {system,user}=buildPrompt(mode);
+  try{
+    const resp=await fetch('https://api.deepseek.com/chat/completions',{
+      method:'POST',
+      headers:{'Content-Type':'application/json','Authorization':'Bearer '+state.apiKey},
+      body:JSON.stringify({
+        model:'deepseek-chat',
+        messages:[{role:'system',content:system},{role:'user',content:user}],
+        temperature:0.7,max_tokens:4096,stream:false,
+      }),
+    });
+    if(!resp.ok){const e=await resp.text();throw new Error('HTTP '+resp.status+': '+e);}
+    const data=await resp.json();
+    const result=data.choices[0].message.content;
+    output.innerHTML=result;
+
+    if(mode==='发言'){
+      const box=document.getElementById('pspeech-'+state.mySeat);
+      if(box){
+        box.value=box.value+'\n[🎯AI发言稿 R'+state.round+' '+state.phase+']\n'+result;
+        state.players[state.mySeat].speeches.push({round:state.round,phase:state.phase,text:'[AI发言稿] '+result.substring(0,500)});
+        saveGame();
+      }
+    }
+  }catch(e){
+    output.innerHTML='<div style="color:var(--red)">❌ API调用失败: '+e.message+'<br><br>请检查：<br>1. API Key是否正确<br>2. 网络连接<br>3. DeepSeek余额</div>';
+  }
+  btnA.disabled=false;btnS.disabled=false;btnA.classList.remove('loading');
+}
+
+function quickAnalysis(mode){
+  if(!state.apiKey){
+    const k=loadApiKey();
+    if(k)state.apiKey=k;
+    else{showToast('请先设置API Key');openSettings();return;}
+  }
+  callDeepSeek(mode);
+}
+
+// ===================================================================
+// SETTINGS
+// ===================================================================
+function openSettings(){
+  document.getElementById('m-apikey').value=state.apiKey||loadApiKey();
+  document.getElementById('m-wolf-teammates').value=state.wolfTeammates.join(',');
+  document.getElementById('settings-modal').classList.add('show');
+}
+function closeSettings(){document.getElementById('settings-modal').classList.remove('show');}
+function saveSettings(){
+  const key=document.getElementById('m-apikey').value.trim();
+  if(key){state.apiKey=key;saveApiKey(key);}
+  const t=document.getElementById('m-wolf-teammates').value.trim();
+  state.wolfTeammates=t?t.split(',').map(s=>parseInt(s.trim())).filter(n=>!isNaN(n)):[];
+  saveGame();closeSettings();showToast('设置已保存');
+}
+
+// ===================================================================
+// TOAST
+// ===================================================================
+function showToast(msg){
+  const t=document.getElementById('toast');
+  t.textContent=msg;t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'),3000);
+}
+
+// ===================================================================
+// PAGE UNLOAD
+// ===================================================================
+window.addEventListener('beforeunload',()=>{
+  if(currentRecorder){try{currentRecorder.stop();}catch(e){}}
+  saveGame();
+});
+</script>
+</body>
+</html>
