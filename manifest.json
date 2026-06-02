@@ -1,24 +1,14 @@
 {
   "name": "狼人杀发言助手",
   "short_name": "狼人杀助手",
-  "description": "AI 驱动的狼人杀发言分析与伪装方案",
+  "description": "AI 驱动 · 讯飞语音识别 · DeepSeek R1 推理",
   "start_url": "werewolf-assistant.html",
   "display": "standalone",
   "background_color": "#0d0d0d",
   "theme_color": "#0d0d0d",
   "orientation": "portrait",
   "icons": [
-    {
-      "src": "icon-192.svg",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    },
-    {
-      "src": "icon-512.svg",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
-    }
+    {"src":"icon-192.svg","sizes":"192x192","type":"image/svg+xml","purpose":"any maskable"},
+    {"src":"icon-512.svg","sizes":"512x512","type":"image/svg+xml","purpose":"any maskable"}
   ]
 }
