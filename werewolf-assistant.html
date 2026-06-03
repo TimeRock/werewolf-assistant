@@ -3,10 +3,6 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
-<meta name="theme-color" content="#0d0d0d">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="mobile-web-app-capable" content="yes">
 <link rel="manifest" href="manifest.json">
 <link rel="apple-touch-icon" href="icon-192.svg">
 <title>🐺 狼人杀发言助手 Pro</title>
@@ -38,8 +34,6 @@
   --glow:0 0 16px rgba(0,201,167,.15);
 }
 body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding-bottom:80px;}
-
-/* ===== SETUP ===== */
 #setup-screen{display:flex;flex-direction:column;align-items:center;padding:60px 20px;min-height:100vh;}
 #setup-screen h1{font-size:2.2em;margin-bottom:4px;background:linear-gradient(135deg,var(--gold),var(--accent));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;text-shadow:none;}
 #setup-screen .subtitle{color:var(--text2);margin-bottom:40px;font-size:0.9em;}
@@ -56,8 +50,6 @@ body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;backgr
 .setup-form .btn-restore{width:100%;margin-top:12px;padding:12px;border:1px dashed var(--border);border-radius:var(--radius-sm);background:transparent;color:var(--text2);font-size:0.85em;cursor:pointer;transition:all .25s ease;}
 .setup-form .btn-restore:hover{border-color:var(--accent);color:var(--accent);background:rgba(0,201,167,.05);}
 .setup-form .section-title{font-size:0.85em;color:var(--gold);margin-top:28px;padding-bottom:6px;border-bottom:1px solid var(--border);font-weight:600;letter-spacing:1px;}
-
-/* ===== GAME SCREEN ===== */
 #game-screen{display:none;padding:16px;max-width:1100px;margin:0 auto;}
 .game-header{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:10px;padding:16px 20px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:12px;box-shadow:var(--shadow);}
 .game-header .info{display:flex;gap:10px;flex-wrap:wrap;}
@@ -77,23 +69,17 @@ body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;backgr
 .phase-toggle.night:hover{border-color:var(--accent3);box-shadow:0 2px 10px rgba(0,229,255,.15);}
 .game-header .btn-restart-game{padding:7px 14px;border:1px solid rgba(0,201,167,.3);border-radius:var(--radius-sm);background:transparent;color:var(--accent);cursor:pointer;font-size:0.78em;transition:all .25s ease;}
 .game-header .btn-restart-game:hover{background:rgba(0,201,167,.1);border-color:var(--accent);}
-
-/* ===== STATUS ===== */
 .status-bar{display:flex;gap:12px;padding:10px 16px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);margin-bottom:10px;font-size:0.8em;flex-wrap:wrap;align-items:center;}
 .status-bar .alive{color:var(--green);font-weight:600;}
 .status-bar .alive::before{content:'🟢 ';}
 .status-bar .dead-status{color:var(--red);}
 .status-bar .dead-status::before{content:'💀 ';}
-
-/* ===== TRACK ===== */
 .track-wrap{display:flex;gap:8px;margin-bottom:10px;flex-wrap:wrap;}
 .track-wrap>div{flex:1;min-width:150px;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px 14px;transition:border-color .2s ease;}
 .track-wrap>div:focus-within{border-color:var(--accent2);}
 .track-wrap .track-label{font-size:0.7em;color:var(--text2);margin-bottom:4px;font-weight:500;}
 .track-wrap textarea{width:100%;padding:6px 8px;border:none;border-radius:6px;background:var(--bg2);color:var(--text);font-size:0.75em;resize:vertical;height:34px;outline:none;transition:all .2s ease;font-family:inherit;}
 .track-wrap textarea:focus{background:var(--card3);box-shadow:inset 0 0 0 1px var(--accent2);}
-
-/* ===== PLAYER GRID ===== */
 .player-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px;margin-bottom:12px;}
 .player-card{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:10px;position:relative;transition:all .25s ease;box-shadow:0 2px 8px rgba(0,0,0,.2);}
 .player-card:hover{border-color:var(--accent2);box-shadow:0 8px 30px rgba(0,201,167,.12);transform:translateY(-1px);}
@@ -136,8 +122,6 @@ body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;backgr
 .btn-clear-speech:hover{background:rgba(231,76,60,.1);border-color:var(--red)!important;color:var(--red);}
 .btn-record:disabled,.btn-voice:disabled{opacity:.3;cursor:not-allowed;background:var(--card3)!important;box-shadow:none!important;}
 .btn-record:disabled:hover,.btn-voice:disabled:hover{transform:none!important;}
-
-/* ===== ANALYSIS ===== */
 .analysis-section{background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:18px 20px;margin-bottom:12px;box-shadow:var(--shadow);}
 .analysis-section .section-title{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px;}
 .analysis-section .section-title h3{font-size:1em;color:var(--text);font-weight:700;}
@@ -157,8 +141,6 @@ body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;backgr
 .analysis-output::-webkit-scrollbar-thumb{background:var(--card3);border-radius:3px;}
 .analysis-output .placeholder{color:var(--dim);font-style:italic;}
 .analysis-output .thinking{color:var(--gold);animation:pulse 1.5s infinite;}
-
-/* ===== SETTINGS ===== */
 .btn-settings{position:fixed;bottom:24px;right:24px;width:52px;height:52px;border-radius:50%;border:none;background:linear-gradient(135deg,var(--accent2),var(--accent));color:#fff;font-size:1.4em;cursor:pointer;box-shadow:0 4px 20px rgba(25,118,210,.4);z-index:100;display:none;transition:all .25s ease;}
 .btn-settings:hover{transform:rotate(30deg) scale(1.1);box-shadow:0 6px 25px rgba(25,118,210,.5);}
 .btn-settings:active{transform:rotate(30deg) scale(.95);}
@@ -179,242 +161,154 @@ body{font-family:'PingFang SC','Microsoft YaHei',-apple-system,sans-serif;backgr
 .modal-box .modal-actions .btn-cancel{background:var(--card3);color:var(--text2);border:1px solid var(--border);}
 .modal-box .modal-actions .btn-cancel:hover{background:var(--bg2);color:var(--text);}
 .modal-box .modal-actions .btn-cancel:active{transform:scale(.96);}
-
-/* ===== TOAST ===== */
 .toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%) scale(.9);background:#1a1a2e;color:#f0f0f0;padding:12px 28px;border-radius:var(--radius-sm);font-size:0.85em;z-index:300;opacity:0;transition:all .3s cubic-bezier(.4,0,.2,1);pointer-events:none;box-shadow:0 4px 20px rgba(0,0,0,.15);}
 .toast.show{opacity:1;transform:translateX(-50%) scale(1);}
-
-/* ===== RESPONSIVE ===== */
-@media(max-width:600px){
-  .player-grid{grid-template-columns:repeat(3,1fr);gap:5px;}
-  .player-card{padding:7px;}
-  .player-card .speech-box{height:40px;font-size:0.6em;}
-  .player-card .seat{font-size:1em;}
-  .player-card input.name{font-size:0.65em;}
-  .game-header{flex-direction:column;align-items:stretch;gap:8px;}
-  .game-header .info{justify-content:center;}
-  .game-header .round-ctrl{justify-content:center;}
-  .analysis-output{font-size:0.8em;}
-  #setup-screen h1{font-size:1.7em;}
-  .setup-form{padding:24px 20px;}
-}
+@media(max-width:600px){.player-grid{grid-template-columns:repeat(3,1fr);gap:5px;}.player-card{padding:7px;}.player-card .speech-box{height:40px;font-size:0.6em;}.player-card .seat{font-size:1em;}.player-card input.name{font-size:0.65em;}.game-header{flex-direction:column;align-items:stretch;gap:8px;}.game-header .info{justify-content:center;}.game-header .round-ctrl{justify-content:center;}.analysis-output{font-size:0.8em;}#setup-screen h1{font-size:1.7em;}.setup-form{padding:24px 20px;}}
 @media(min-width:768px){.player-grid{grid-template-columns:repeat(4,1fr);}}
 @media(min-width:1024px){.player-grid{grid-template-columns:repeat(6,1fr);}}
 </style>
 </head>
 <body>
-
 <div id="setup-screen">
-  <h1>🐺 狼人杀发言助手 Pro</h1>
-  <p class="subtitle">DeepSeek R1 推理 · 网易狼人杀全板子</p>
+  <h1>🐺 狼人杀发言助手</h1>
+  <p class="subtitle">AI 驱动的游戏发言分析与伪装方案</p>
   <div class="setup-form">
-    <label>🎲 版型</label>
-    <select id="s-board"></select>
-    <label>🎭 我的身份</label>
-    <select id="s-role"></select>
-    <label>💺 我的号码牌</label>
-    <select id="s-seat"></select>
-
-    <div class="section-title">🔮 AI 模型</div>
-    <label>推理模型</label>
-    <select id="s-model">
-      <option value="deepseek-reasoner" selected>DeepSeek R1 强推理（推荐）</option>
-      <option value="deepseek-chat">DeepSeek V4 快速</option>
+    <label>版型 (Board Type)</label>
+    <select id="s-board"><option value="预女猎白 (标准)">预女猎白 (标准)</option>
+      <option value="狼王守卫">狼王守卫</option><option value="狼王魔术师">狼王魔术师</option>
+      <option value="石像鬼守墓人">石像鬼守墓人</option><option value="血月使徒">血月使徒</option>
+      <option value="噩梦之影">噩梦之影</option><option value="咒狐">咒狐</option>
+      <option value="9人局">9人局</option><option value="6人局">6人局</option>
+    </select>
+    <label>我的身份 (My Role)</label>
+    <select id="s-role">
+      <optgroup label="好人阵营">
+        <option value="平民">平民</option><option value="预言家">预言家</option>
+        <option value="女巫">女巫</option><option value="猎人">猎人</option>
+        <option value="白痴">白痴</option><option value="守卫">守卫</option>
+        <option value="骑士">骑士</option><option value="魔术师">魔术师</option>
+        <option value="守墓人">守墓人</option><option value="摄梦人">摄梦人</option>
+      </optgroup>
+      <optgroup label="狼人阵营">
+        <option value="狼人">狼人</option><option value="狼王">狼王</option>
+        <option value="白狼王">白狼王</option><option value="狼美人">狼美人</option>
+        <option value="石像鬼">石像鬼</option><option value="血月使徒">血月使徒</option>
+        <option value="噩梦之影">噩梦之影</option><option value="机械狼">机械狼</option>
+      </optgroup>
+    </select>
+    <label>我的号码牌 (My Seat #)</label>
+    <select id="s-seat">
+      <option value="1">1号</option><option value="2">2号</option><option value="3">3号</option>
+      <option value="4">4号</option><option value="5">5号</option><option value="6">6号</option>
+      <option value="7">7号</option><option value="8">8号</option><option value="9">9号</option>
+      <option value="10">10号</option><option value="11">11号</option><option value="12">12号</option>
+      <option value="13">13号</option><option value="14">14号</option><option value="15">15号</option>
+      <option value="16">16号</option><option value="17">17号</option><option value="18">18号</option>
     </select>
     <label>DeepSeek API Key</label>
-    <input type="password" id="s-apikey" placeholder="自动填充已保存的 Key">
-    <p class="apikey-note" id="apikey-status">保存于浏览器本地，关页不丢</p>
-
-    <div class="section-title">🎙️ 语音识别</div>
-    <label>语音引擎</label>
-    <select id="s-voice-engine">
-      <option value="browser">Chrome 自带（无需配置）</option>
-      <option value="xfyun">讯飞语音（中文更准，需填下方参数）</option>
-    </select>
-    <div id="xfyun-config" style="display:none">
-      <label>讯飞 APPID <span style="color:var(--red)">*</span></label>
-      <input type="text" id="s-xf-appid" placeholder="必填">
-      <label>讯飞 API Key <span style="color:var(--red)">*</span></label>
-      <input type="text" id="s-xf-apikey" placeholder="必填">
-      <label>讯飞 API Secret <span style="color:var(--red)">*</span></label>
-      <input type="text" id="s-xf-apisecret" placeholder="必填">
-      <p class="apikey-note">在 console.xfyun.cn 创建「语音听写」应用获取。讯飞 WebSocket 认证需要三个参数同时提供，缺一不可</p>
-    </div>
-
-    <label>🐺 狼队友号码（你是狼时填写）</label>
+    <input type="password" id="s-apikey" placeholder="sk-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx">
+    <p class="apikey-note">API Key 仅保存在本地浏览器，不会上传到任何服务器</p>
+    <label>狼队友号码（如果你是狼人，选填）</label>
     <input type="text" id="s-wolf-teammates" placeholder="如: 3,7,11">
-
     <button class="btn-start" onclick="startGame()">🎮 开始游戏</button>
-    <button class="btn-restore" onclick="restoreGame()" id="btn-restore" style="display:none">📂 恢复上一局</button>
+    <button class="btn-restore" onclick="restoreGame()" id="btn-restore" style="display:none">📂 恢复上一局游戏</button>
   </div>
 </div>
-
 <div id="game-screen">
   <div class="game-header">
     <div class="info">
       <span>🎲 <span id="g-board"></span></span>
       <span class="myrole" id="g-role"></span>
       <span class="myseat" id="g-seat"></span>
-      <span id="g-model-badge" style="background:#2c3e50;color:#f0c040"></span>
     </div>
     <div class="round-ctrl">
       <button onclick="changeRound(-1)">◀</button>
       <span class="round-num" id="g-round">第1轮 白天</span>
       <button onclick="changeRound(1)">▶</button>
       <button class="phase-toggle day" id="g-phase-btn" onclick="togglePhase()">🌙 入夜</button>
-      <button class="btn-restart-game" onclick="confirmRestart()">🔄 新一局</button>
+      <button class="btn-restart-game" onclick="resetGame()">🔄 重开</button>
     </div>
   </div>
-
   <div class="status-bar" id="status-bar"></div>
-
   <div class="track-wrap" id="track-wrap">
     <div><div class="track-label">🗳️ 投票记录</div><textarea id="g-votes" placeholder="R1: 2投3,4投5,6投2..."></textarea></div>
     <div><div class="track-label">🌙 夜间死讯</div><textarea id="g-deaths" placeholder="R1: 2号被刀,5号被毒..."></textarea></div>
-    <div style="flex-basis:100%"><div class="track-label">📝 备注（其他情况，AI 分析时会参考）</div><textarea id="g-notes" placeholder="如：3号上轮发言前后矛盾、7号疑似在穿神衣服、5号和8号可能是情侣..." style="width:100%;padding:6px;border:none;border-radius:4px;background:var(--card2);color:var(--text);font-size:0.75em;resize:vertical;height:36px;outline:none;"></textarea></div>
+    <div><div class="track-label">📝 备注</div><textarea id="g-notes" placeholder="其他信息，AI分析时会参考..."></textarea></div>
   </div>
-
   <div class="player-grid" id="player-grid"></div>
-
   <div class="analysis-section">
     <div class="section-title">
-      <h3>🧠 AI 分析 & 发言稿 <span id="g-model-label" style="font-size:0.7em;color:var(--dim)"></span></h3>
+      <h3>🧠 AI 分析 & 发言稿</h3>
       <div class="btn-group">
         <button onclick="quickAnalysis('分析')" id="btn-analyze">📊 分析局势</button>
-        <button onclick="quickAnalysis('发言')" id="btn-speech" class="btn-speech">🎤 生成发言稿</button>
+        <button onclick="quickAnalysis('发言')" id="btn-speech">🎤 生成发言稿</button>
       </div>
     </div>
     <div class="analysis-output" id="analysis-output">
-      <div class="placeholder">点击「分析局势」获取五阶段推理，或「生成发言稿」获得本轮发言建议。</div>
+      <div class="placeholder">点击「分析局势」获取 AI 分析，或「生成发言稿」获得你的发言建议。</div>
     </div>
   </div>
 </div>
-
 <button class="btn-settings" onclick="openSettings()" id="settings-btn">⚙️</button>
 <div class="modal-overlay" id="settings-modal">
   <div class="modal-box">
     <h3>⚙️ 设置</h3>
-    <label>推理模型</label>
-    <select id="m-model"><option value="deepseek-reasoner">DeepSeek R1</option><option value="deepseek-chat">DeepSeek V4</option></select>
+    <label>当前轮次</label>
+    <select id="m-round"><option value="1">第1轮</option><option value="2">第2轮</option><option value="3">第3轮</option>
+      <option value="4">第4轮</option><option value="5">第5轮</option><option value="6">第6轮</option>
+      <option value="7">第7轮</option><option value="8">第8轮</option><option value="9">第9轮</option><option value="10">第10轮</option>
+    </select>
     <label>DeepSeek API Key</label>
-    <input type="password" id="m-apikey">
-    <label>语音引擎</label>
-    <select id="m-voice-engine"><option value="browser">Chrome自带</option><option value="xfyun">讯飞</option></select>
-    <label>讯飞 APPID</label><input type="text" id="m-xf-appid">
-    <label>讯飞 API Key</label><input type="text" id="m-xf-apikey">
-    <label>讯飞 API Secret</label><input type="text" id="m-xf-apisecret">
-    <label>狼队友号码</label><input type="text" id="m-wolf-teammates" placeholder="如:3,7,11">
+    <input type="password" id="m-apikey" placeholder="sk-...">
+    <label>狼队友号码（选填）</label>
+    <input type="text" id="m-wolf-teammates" placeholder="如: 3,7,11">
     <div class="modal-actions">
       <button class="btn-save" onclick="saveSettings()">保存</button>
       <button class="btn-cancel" onclick="closeSettings()">取消</button>
     </div>
+    <button class="btn-danger" onclick="if(confirm('确定重置所有数据？')){localStorage.removeItem('werewolf_game');localStorage.removeItem('werewolf_apikey');location.reload();}" style="width:100%;margin-top:12px;padding:10px;border:1px solid var(--red);border-radius:var(--radius-sm);background:transparent;color:var(--red);cursor:pointer;font-size:0.85em;">🗑️ 重置游戏</button>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
-
 <script>
-// ===== BOARDS =====
-var BOARDS=[
-  {n:'预女猎白 (经典)',p:12},{n:'狼王守卫',p:12},{n:'狼王魔术师',p:12},
-  {n:'石像鬼守墓人',p:12},{n:'血月使徒',p:12},{n:'噩梦之影',p:12},
-  {n:'蚀日侍女',p:12},{n:'咒狐',p:12},{n:'熊猫 (熊)',p:12},
-  {n:'花蝴蝶',p:12},{n:'机械狼',p:12},{n:'狼美人骑士',p:12},
-  {n:'白狼王骑士',p:12},{n:'白狼王愚者骑士',p:12},{n:'潜行者',p:12},
-  {n:'摄梦人',p:12},{n:'时波之女/时波操纵者',p:12},{n:'丘比特',p:12},
-  {n:'种狼',p:12},{n:'变脸者',p:12},{n:'蛊惑师',p:12},
-  {n:'奇迹商人',p:12},{n:'炼金魔女',p:12},{n:'蚀时狼妃',p:12},
-  {n:'白昼学者/寂夜导师',p:12},{n:'鹰眼',p:12},{n:'纯白夜影',p:12},
-  {n:'隐狼',p:12},{n:'阴阳师',p:12},{n:'夜之贵族',p:12},
-  {n:'9人局',p:9},{n:'6人局',p:6},
-];
-var GOOD_RS=['平民','预言家','女巫','猎人','白痴','守卫','骑士','魔术师','守墓人','摄梦人','潜行者','熊(熊猫)','花蝴蝶','时波操纵者','蛊惑师','变脸者','丘比特','驯熊师','灵媒师','奇迹商人','炼金魔女','白昼学者','鹰眼','阴阳师'];
-var WOLF_RS=['狼人','狼王','白狼王','狼美人','石像鬼','血月使徒','噩梦之影','机械狼','蚀日侍女','种狼','时波之女','狼鸦之爪','蚀时狼妃','寂夜导师','纯白夜影','隐狼','夜之贵族'];
-var ALL_RS=['未知'].concat(GOOD_RS,WOLF_RS,['咒狐','混血儿']);
-var RK='【身份技能】\n预言家:查验一人阵营。女巫:解药救人毒药杀人。猎人:出局开枪(毒杀不能)。白痴/愚者:被投翻牌不死失投票权。守卫:守一人,不连守,同守同救死。骑士:白天决斗,戳狼狼死戳好骑士死。魔术师:交换两人。守墓人:知上轮被投者阵营。摄梦人:梦一人,摄梦人死梦游者死。潜行者:投给未出局者当晚杀。熊:邻有狼咆哮。花蝴蝶:抱一人使技能无效,花蝴蝶死抱者死。丘比特:连情侣。奇迹商人:给一次性技能。炼金魔女:知所有人行动,法药救/毒药杀。白昼学者:白天增强/削弱。鹰眼:查是否为狼。阴阳师:复活死人。狼人:刀一人。狼王:被投开枪。白狼王:自爆带人。狼美人:魅惑,被投/枪杀魅惑者死。石像鬼:不互知,查具体身份。血月使徒:被投则下夜好人技能失效。噩梦之影:恐惧封技能。机械狼:学死人技能。蚀日侍女:被查验显好。种狼:感染变狼。蚀时狼妃:屏蔽技能,被查验显好。寂夜导师:夜晚增强/削弱。纯白夜影:额外击杀。隐狼:被查验显好,与狼互知。夜之贵族:使投票无效。咒狐:第三方,活到最后单赢。混血儿:崇拜一人,崇拜对象赢则赢。';
+var S={board:'',myRole:'',mySeat:0,totalPlayers:12,round:1,phase:'day',players:{},apiKey:'',wolfTees:[],gameStarted:false,model:'deepseek-chat',xfAppid:'',xfKey:'',xfSecret:'',audioBlobs:{},votes:'',deaths:'',notes:''};
+var RK={
+  '预言家':'每晚查验一人身份。','女巫':'一瓶解药一瓶毒药。','猎人':'出局可开枪带走一人。','白痴':'被放逐可翻牌免死。','守卫':'每晚守护一人防狼刀。','骑士':'白天可决斗验证身份。','魔术师':'夜晚可交换两人身份。','守墓人':'次日知道出局者阵营。','摄梦人':'每晚摄梦一人,若连续摄梦同一人则救活。',
+  '狼人':'每晚刀一人,可自刀。','狼王':'被放逐可开枪带走一人。','白狼王':'白天自爆带走一人。','狼美人':'每晚魅惑一人,出局时带走。','石像鬼':'每晚查验一人身份。','血月使徒':'自爆后进入黑夜,沉默全场。','噩梦之影':'恐惧一人使其整夜不能行动。','机械狼':'可学习一个已死角色的技能。',
+};
+var BOARDS=[['预女猎白 (标准)',12],['狼王守卫',12],['狼王魔术师',12],['石像鬼守墓人',12],['血月使徒',12],['噩梦之影',12],['咒狐',12],['奇迹商人',12],['炼金魔女',12],['蚀时狼妃',12],['白昼学者/寂夜导师',12],['鹰眼',12],['纯白夜影',12],['隐狼',12],['阴阳师',12],['夜之贵族',12],['白狼王愚者骑士',12],['9人局',9],['6人局',6]];
+var WOLF_NAMES=['狼人','狼王','白狼王','狼美人','石像鬼','血月使徒','噩梦之影','机械狼','蚀时狼妃','隐狼'];
+var GOOD_NAMES=['平民','预言家','女巫','猎人','白痴','守卫','骑士','魔术师','守墓人','摄梦人','奇迹商人','炼金魔女','白昼学者','寂夜导师','鹰眼','纯白夜影','阴阳师','夜之贵族'];
+var ALL_ROLES=GOOD_NAMES.concat(WOLF_NAMES);
 
-// ===== STATE =====
-var S={board:'',myRole:'',mySeat:0,total:12,round:1,phase:'day',players:{},apiKey:'',wolfTees:[],started:false,model:'deepseek-reasoner',voice:'browser',xfAppid:'',xfKey:'',xfSecret:'',votes:'',deaths:'',notes:''};
-
-// ===== SETUP UI =====
-function initSetup(){
-  var sb=document.getElementById('s-board'),i;
-  sb.innerHTML=BOARDS.map(function(b){return '<option value="'+b.n+'">'+b.n+' ('+b.p+'人)</option>';}).join('');
-
-  var sr=document.getElementById('s-role');
-  sr.innerHTML='<optgroup label="未知"><option>未知</option></optgroup><optgroup label="神职(好人)">'+GOOD_RS.map(function(r){return '<option>'+r+'</option>';}).join('')+'</optgroup><optgroup label="狼人阵营">'+WOLF_RS.map(function(r){return '<option>'+r+'</option>';}).join('')+'</optgroup><optgroup label="第三方"><option>咒狐</option><option>混血儿</option></optgroup>';
-
-  var ss=document.getElementById('s-seat');
-  ss.innerHTML='';for(i=1;i<=18;i++){var o=document.createElement('option');o.value=i;o.textContent=i+'号';ss.appendChild(o);}
-
-  // Restore saved values
-  document.getElementById('s-apikey').value=LS('werewolf_apikey');
-  var xf=JSON.parse(LS('werewolf_xfyun')||'{}');
-  if(xf.appid){document.getElementById('s-xf-appid').value=xf.appid;document.getElementById('s-xf-apikey').value=xf.apikey;document.getElementById('s-xf-apisecret').value=xf.apisecret;}
-  document.getElementById('s-model').value=LS('werewolf_model')||'deepseek-reasoner';
-  document.getElementById('s-voice-engine').value=LS('werewolf_voice')||'browser';
-  if(LS('werewolf_voice')==='xfyun')document.getElementById('xfyun-config').style.display='block';
-
-  // Voice engine toggle
-  document.getElementById('s-voice-engine').onchange=function(){
-    document.getElementById('xfyun-config').style.display=this.value==='xfyun'?'block':'none';
-  };
-
-  // Check restore button
-  var saved=LG();
-  document.getElementById('btn-restore').style.display=(saved&&saved.started)?'block':'none';
-}
-initSetup();
-
-function LS(k){try{return localStorage.getItem(k)||'';}catch(e){return '';}}
-function LSS(k,v){try{localStorage.setItem(k,v);}catch(e){}}
-function SG(){
-  try{localStorage.setItem('werewolf_game',JSON.stringify({board:S.board,myRole:S.myRole,mySeat:S.mySeat,total:S.total,round:S.round,phase:S.phase,players:S.players,wolfTees:S.wolfTees,started:true,model:S.model,voice:S.voice,votes:S.votes,deaths:S.deaths,notes:S.notes}));}catch(e){}
-}
-function LG(){
-  try{var r=localStorage.getItem('werewolf_game');return r?JSON.parse(r):null;}catch(e){return null;}
-}
+function SG(){try{localStorage.setItem('werewolf_game',JSON.stringify({board:S.board,myRole:S.myRole,mySeat:S.mySeat,totalPlayers:S.totalPlayers,round:S.round,phase:S.phase,players:S.players,wolfTees:S.wolfTees,gameStarted:true,votes:S.votes,deaths:S.deaths,notes:S.notes,model:S.model}));localStorage.setItem('werewolf_apikey',S.apiKey||'');}catch(e){}}
+function LG(){try{var r=localStorage.getItem('werewolf_game');return r?JSON.parse(r):null;}catch(e){return null;}}
 function CG(){localStorage.removeItem('werewolf_game');}
 
-function initPlayers(t){
-  var p={};for(var i=1;i<=t;i++)p[i]={name:'',spchs:[],alive:true,deadR:0,deadC:'',rStat:'unknown',role:'',audUrl:null};return p;
-}
-function isWolf(r){return WOLF_RS.indexOf(r)>=0;}
-function isGood(r){return GOOD_RS.indexOf(r)>=0;}
+function initP(t,s){var p={};for(var i=1;i<=t;i++){p[i]={name:'',speeches:[],alive:true,deadRound:0,deadCause:'',roleGuess:'unknown',audioBlob:null};}return p;}
+function showT(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
 
-// ===== START =====
+document.addEventListener('DOMContentLoaded',function(){
+  var k=localStorage.getItem('werewolf_apikey');if(k)document.getElementById('s-apikey').value=k;
+  var saved=LG();if(saved&&saved.gameStarted)document.getElementById('btn-restore').style.display='block';
+});
+
 function startGame(){
-  var board=document.getElementById('s-board').value;
-  var role=document.getElementById('s-role').value;
-  var seat=parseInt(document.getElementById('s-seat').value);
-  var apikey=document.getElementById('s-apikey').value.trim();
-  if(!apikey){showT('请输入 DeepSeek API Key');return;}
-  var b=null;for(var i=0;i<BOARDS.length;i++){if(BOARDS[i].n===board){b=BOARDS[i];break;}}
-  var total=b?b.p:12;
-  LSS('werewolf_apikey',apikey);
-  S.model=document.getElementById('s-model').value;
-  S.voice=document.getElementById('s-voice-engine').value;
-  if(S.voice==='xfyun'){
-    S.xfAppid=document.getElementById('s-xf-appid').value.trim();
-    S.xfKey=document.getElementById('s-xf-apikey').value.trim();
-    S.xfSecret=document.getElementById('s-xf-apisecret').value.trim();
-    if(!S.xfAppid||!S.xfKey||!S.xfSecret){showT('选择讯飞后需要填写 APPID、API Key、API Secret 三个参数');return;}
-    LSS('werewolf_xfyun',JSON.stringify({appid:S.xfAppid,apikey:S.xfKey,apisecret:S.xfSecret}));
-  }
-  LSS('werewolf_model',S.model);LSS('werewolf_voice',S.voice);
-  S.board=board;S.myRole=role;S.mySeat=seat;S.total=total;S.round=1;S.phase='day';S.apiKey=apikey;
+  S.board=document.getElementById('s-board').value;
+  S.myRole=document.getElementById('s-role').value;
+  S.mySeat=parseInt(document.getElementById('s-seat').value);
+  S.apiKey=document.getElementById('s-apikey').value.trim();
+  S.totalPlayers=12;
+  for(var i=0;i<BOARDS.length;i++){if(BOARDS[i][0]===S.board){S.totalPlayers=BOARDS[i][1];break;}}
+  if(!S.apiKey){showT('请输入 DeepSeek API Key');return;}
   var t=document.getElementById('s-wolf-teammates').value.trim();
-  S.wolfTees=t?t.split(',').map(function(s){return parseInt(s.trim());}).filter(function(n){return!isNaN(n);}):[];
-  S.players=initPlayers(total);S.started=true;S.votes='';S.deaths='';S.notes='';SG();renderG();
-}
-function restoreGame(){
-  var s=LG();if(!s)return;
-  S=s;var k=LS('werewolf_apikey');if(k)S.apiKey=k;
-  var xf=JSON.parse(LS('werewolf_xfyun')||'{}');if(xf.appid){S.xfAppid=xf.appid;S.xfKey=xf.apikey;S.xfSecret=xf.apisecret;}
-  S.model=LS('werewolf_model')||S.model;S.voice=LS('werewolf_voice')||S.voice;renderG();
+  S.wolfTees=t?t.split(',').map(function(s){return parseInt(s.trim());}).filter(function(n){return !isNaN(n);}):[];
+  S.round=1;S.phase='day';S.players=initP(S.totalPlayers,S.mySeat);S.gameStarted=true;S.votes='';S.deaths='';S.notes='';S.audioBlobs={};
+  SG();renderG();
 }
 
-// ===== RENDER =====
+function restoreGame(){var saved=LG();if(!saved)return;S=saved;renderG();}
+
 function renderG(){
   document.getElementById('setup-screen').style.display='none';
   document.getElementById('game-screen').style.display='block';
@@ -422,201 +316,115 @@ function renderG(){
   document.getElementById('g-board').textContent=S.board;
   document.getElementById('g-role').textContent='🎭 '+S.myRole;
   document.getElementById('g-seat').textContent='💺 '+S.mySeat+'号';
-  var ml=document.getElementById('g-model-badge');ml.textContent=S.model==='deepseek-reasoner'?'🧠 R1':'⚡V4';
-  document.getElementById('g-model-label').textContent=S.model==='deepseek-reasoner'?'(DeepSeek R1 推理模式)':'(DeepSeek V4)';
-  document.getElementById('m-model').value=S.model;
-  document.getElementById('m-voice-engine').value=S.voice;
-  document.getElementById('m-xf-appid').value=S.xfAppid;
-  document.getElementById('m-xf-apikey').value=S.xfKey;
-  document.getElementById('m-xf-apisecret').value=S.xfSecret;
-
-  // Restore track inputs
+  updRound();renderP();updBar();
   document.getElementById('g-votes').value=S.votes||'';
   document.getElementById('g-deaths').value=S.deaths||'';
   document.getElementById('g-notes').value=S.notes||'';
-  // Wire track inputs
-  document.getElementById('g-votes').oninput=function(){S.votes=this.value;SG();};
-  document.getElementById('g-deaths').oninput=function(){S.deaths=this.value;SG();};
-  document.getElementById('g-notes').oninput=function(){S.notes=this.value;SG();};
-
-  updRound();renderP();updBar();SG();
+  SG();
 }
 function updRound(){
   var pt=S.phase==='day'?'☀️ 白天':'🌙 夜晚';
   document.getElementById('g-round').textContent='第'+S.round+'轮 '+pt;
-  var b=document.getElementById('g-phase-btn');b.textContent=S.phase==='day'?'🌙 入夜':'☀️ 天亮';b.className='phase-toggle '+S.phase;
+  var btn=document.getElementById('g-phase-btn');
+  btn.textContent=S.phase==='day'?'🌙 入夜':'☀️ 天亮';
+  btn.className='phase-toggle '+(S.phase==='day'?'day':'night');
 }
-
-// ===== PLAYERS =====
 function renderP(){
   var grid=document.getElementById('player-grid');grid.innerHTML='';
   var seats=Object.keys(S.players).map(Number).sort(function(a,b){return a-b;});
-  for(var si=0;si<seats.length;si++){
-    var seat=seats[si],p=S.players[seat],isMe=seat===S.mySeat;
-    var badge='';
-    if(p.role&&p.rStat!=='unknown'){badge='<span class="role-badge '+(p.rStat==='confirmed'?'confirmed':'claimed')+'">'+(p.rStat==='confirmed'?'✓':'?')+' '+p.role+'</span>';}
-    else{badge='<span class="role-badge unknown">❓未知</span>';}
-    var spchs=p.spchs.map(function(s){return'['+(s.phase==='day'?'白天':'夜晚')+'R'+s.round+'] '+s.text;}).join('\n');
-    var rOpts=ALL_RS.map(function(r){return'<option value="'+r+'"'+(p.role===r?' selected':'')+'>'+r+'</option>';}).join('');
-
+  for(var i=0;i<seats.length;i++){
+    var seat=seats[i],p=S.players[seat],isMe=seat===S.mySeat;
+    var speeches=p.speeches.map(function(s){return'['+(s.phase==='day'?'白天':'夜晚')+(s.round?' R'+s.round:'')+'] '+s.text;}).join('\n');
     var card=document.createElement('div');
-    card.className='player-card'+(p.alive?'':' dead');card.id='pc-'+seat;
-    card.innerHTML='<div class="seat-row"><span class="seat">'+seat+'号'+(isMe?' <span class="tag">👤我</span>':'')+'</span>'+badge+'</div>'+
-      '<input class="name" id="pn-'+seat+'" placeholder="昵称" value="'+(p.name||'')+'" oninput="pName('+seat+',this.value)"'+(isMe?' readonly':'')+'>'+
-      '<div class="role-row"><select id="pr-'+seat+'" onchange="rChg('+seat+')">'+rOpts+'</select><button class="btn-role-set" id="prb-'+seat+'" onclick="rCycle('+seat+')">❓未知</button></div>'+
-      '<textarea class="speech-box" id="ps-'+seat+'" placeholder="'+(isMe?'AI发言稿自动填充':'点击🎤识别')+'">'+spchs+'</textarea>'+
-      '<div class="actions">'+
-        '<button class="btn-record" id="prec-'+seat+'" onclick="recA('+seat+')">🔴录</button>'+
-        '<button class="btn-play" id="ppla-'+seat+'" onclick="playA('+seat+')"'+(p.audUrl?'':' disabled')+' style="display:'+(p.audUrl?'inline-block':'none')+'">▶️放</button>'+
-        '<button class="btn-voice" id="pvo-'+seat+'" onclick="sSTT('+seat+')">🎤识</button>'+
-        '<button class="btn-toggle-dead" onclick="tDead('+seat+')" '+(isMe?'disabled':'')+'>'+(p.alive?'💀死':'🔄活')+'</button>'+
-        '<button class="btn-clear-speech" onclick="clrSp('+seat+')">🗑️</button>'+
-      '</div>';
+    card.className='player-card'+(p.alive?'':' dead');
+    card.id='pcard-'+seat;
+    var roleOpts='<option value="unknown">身份?</option><option value="claimed">自称</option><option value="confirmed">确认</option>';
+    card.innerHTML='<div class="seat-row"><span class="seat">'+seat+'号 '+(isMe?'<span class="tag">👤我</span>':'')+'</span><span class="role-badge '+p.roleGuess+'">'+(p.roleGuess==='unknown'?'?':p.roleGuess==='claimed'?'自称':p.roleGuess==='confirmed'?'确认':'')+'</span></div>'+
+      '<input class="name" id="pname-'+seat+'" placeholder="昵称" value="'+(p.name||'')+'" oninput="updatePName('+seat+',this.value)">'+
+      '<div class="role-row"><select id="prole-'+seat+'">'+roleOpts+'</select><button class="btn-role-set" onclick="setRoleGuess('+seat+')">设置</button></div>'+
+      '<textarea class="speech-box" id="pspeech-'+seat+'" placeholder="'+(isMe?'点击生成发言稿':'点击🎤录音')+'" oninput="updatePSpeech('+seat+',this.value)">'+speeches+'</textarea>'+
+      '<div class="actions"><button class="btn-record" id="prec-'+seat+'" onclick="toggleRec('+seat+')" '+(p.alive&&!isMe?'':'disabled')+'>🎤</button>'+
+      '<button class="btn-toggle-dead" onclick="toggleDead('+seat+')" '+((!isMe)?'':'disabled')+'>'+ (p.alive?'💀':'🔄')+'</button>'+
+      '<button class="btn-clear-speech" onclick="clearPSpeech('+seat+')">🗑️</button></div>';
     grid.appendChild(card);
+    var sel=document.getElementById('prole-'+seat);
+    if(sel)sel.value=p.roleGuess||'unknown';
   }
 }
 function updBar(){
-  var a=[],d=[],r=[];
-  for(var s in S.players){var p=S.players[s];if(p.alive)a.push(s);else d.push(s);if(p.role&&p.rStat==='confirmed')r.push(s+'号='+p.role);}
-  document.getElementById('status-bar').innerHTML='<span class="alive">🟢存活:'+(a.join(',')||'无')+'</span><span class="dead-status">💀阵亡:'+(d.join(',')||'无')+(r.length?' | 📋已确认:'+r.join(','):'')+'</span>';
+  var a=[],d=[];
+  for(var s in S.players){var p=S.players[s];if(p.alive)a.push(s);else d.push(s);}
+  document.getElementById('status-bar').innerHTML='<span class="alive">存活: '+a.join(', ')+'</span><span class="dead-status">阵亡: '+(d.length?d.join(', '):'无')+'</span>';
 }
-function pName(s,v){S.players[s].name=v;SG();}
-function rChg(s){var sel=document.getElementById('pr-'+s);var r=sel.value;var p=S.players[s];if(r==='未知'){p.role='';p.rStat='unknown';}else{p.role=r;if(p.rStat==='unknown')p.rStat='claimed';}renderP();updBar();SG();}
-function rCycle(s){var p=S.players[s];if(p.rStat==='unknown'||!p.role)p.rStat='claimed';else if(p.rStat==='claimed')p.rStat='confirmed';else{p.role='';p.rStat='unknown';}renderP();updBar();SG();}
-function changeRound(d){var nr=S.round+d;if(nr<1)return;S.round=nr;updRound();SG();}
+function updatePName(seat,val){S.players[seat].name=val;SG();}
+function updatePSpeech(seat,val){
+  if(!S.players[seat])return;
+  var ex=S.players[seat].speeches.find(function(s){return s.round===0;});
+  if(ex){ex.text=val;}else{S.players[seat].speeches.push({round:0,phase:S.phase,text:val});}
+  SG();
+}
+function setRoleGuess(seat){
+  var v=document.getElementById('prole-'+seat).value;
+  S.players[seat].roleGuess=v;
+  renderP();SG();
+}
+function toggleDead(seat){
+  var p=S.players[seat];p.alive=!p.alive;
+  if(!p.alive){p.deadRound=S.round;p.deadCause=S.phase==='day'?'放逐':'阵亡';}
+  renderP();updBar();SG();
+}
+function clearPSpeech(seat){S.players[seat].speeches=[];document.getElementById('pspeech-'+seat).value='';SG();}
+function changeRound(d){S.round=Math.max(1,S.round+d);updRound();SG();}
 function togglePhase(){S.phase=S.phase==='day'?'night':'day';updRound();SG();}
-function tDead(s){var p=S.players[s];p.alive=!p.alive;if(!p.alive){p.deadR=S.round;p.deadC=S.phase==='day'?'白天放逐':'夜晚阵亡';}renderP();updBar();SG();}
-function clrSp(s){S.players[s].spchs=[];document.getElementById('ps-'+s).value='';SG();}
 
-// ===== AUDIO REC =====
-var aRec=null,aChunks=[],aSeat=null;
-function recA(seat){
-  var p=S.players[seat];if(!p.alive)return;
-  if(aSeat===seat&&aRec&&aRec.state!=='inactive'){aRec.stop();return;}
-  if(aRec&&aRec.state!=='inactive')aRec.stop();
-  navigator.mediaDevices.getUserMedia({audio:true}).then(function(stream){
-    aChunks=[];aSeat=seat;
-    aRec=new MediaRecorder(stream,{mimeType:'audio/webm;codecs=opus'});
-    aRec.ondataavailable=function(e){if(e.data.size>0)aChunks.push(e.data);};
-    aRec.onstop=function(){
-      stream.getTracks().forEach(function(t){t.stop();});
-      var blob=new Blob(aChunks,{type:'audio/webm'});
-      var url=URL.createObjectURL(blob);
-      var p2=S.players[seat];
-      if(p2.audUrl)URL.revokeObjectURL(p2.audUrl);
-      p2.audUrl=url;
-      var btn=document.getElementById('prec-'+seat);if(btn){btn.textContent='🔴录';btn.classList.remove('recording');}
-      var pBtn=document.getElementById('ppla-'+seat);if(pBtn){pBtn.style.display='inline-block';pBtn.disabled=false;}
-      showT('✅ '+seat+'号录音完成');
-      aSeat=null;SG();
-    };
-    aRec.start();
-    var btn=document.getElementById('prec-'+seat);if(btn){btn.textContent='⏹️停';btn.classList.add('recording');}
-    showT('🔴 录制 '+seat+'号发言...');
-  }).catch(function(){showT('麦克风权限被拒');});
-}
-function playA(seat){
-  var p=S.players[seat];
-  if(!p.audUrl){showT('没有录音');return;}
-  var audio=new Audio(p.audUrl);
-  audio.onended=function(){var b=document.getElementById('ppla-'+seat);if(b)b.classList.remove('playing');};
-  var b=document.getElementById('ppla-'+seat);if(b)b.classList.add('playing');
-  audio.play().catch(function(){showT('播放失败');});
-}
-
-// ===== STT =====
-function sSTT(seat){
-  var p=S.players[seat];if(!p.alive)return;
-  if(S.voice==='xfyun'&&S.xfAppid)xfSTT(seat);
-  else brSTT(seat);
-}
-
-// Browser STT
-var brRec=null;
-function brSTT(seat){
-  if(brRec===seat&&window.__sr){try{window.__sr.stop();}catch(e){}return;}
-  if(window.__sr){try{window.__sr.stop();}catch(e){}}
+var _rec=null,_seat=null;
+function toggleRec(seat){
+  if(_seat===seat&&_rec){stopRec();return;}
+  if(_rec){try{_rec.stop();}catch(e){}var pb=document.getElementById('prec-'+_seat);if(pb){pb.textContent='🎤';pb.classList.remove('recording');}}
   var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){showT('浏览器不支持语音识别');return;}
-  var rec=new SR();window.__sr=rec;brRec=seat;
-  rec.lang='zh-CN';rec.continuous=true;rec.interimResults=true;
+  if(!SR){showT('浏览器不支持语音识别,请用 Chrome');return;}
+  _rec=new SR();_rec.lang='zh-CN';_rec.continuous=true;_rec.interimResults=true;_seat=seat;
+  var btn=document.getElementById('prec-'+seat);btn.textContent='⏹️';btn.classList.add('recording');
   var ft='';
-  rec.onresult=function(ev){
-    var interim='',final='';
-    for(var i=ev.resultIndex;i<ev.results.length;i++){var t=ev.results[i][0].transcript;if(ev.results[i].isFinal){final+=t;ft+=t;}else interim+=t;}
-    var p2=S.players[seat];
-    var ex=p2.spchs.map(function(s){return'['+(s.phase==='day'?'白天':'夜晚')+'R'+s.round+'] '+s.text;}).join('\n');
-    var ta=document.getElementById('ps-'+seat);var interimText=interim?'('+interim+')':'';var recText=final||interim?'\n[🎤]'+ft+interimText:'';ta.value=ex+recText;ta.scrollTop=ta.scrollHeight;
+  _rec.onresult=function(e){
+    var im='',fn='';
+    for(var i=e.resultIndex;i<e.results.length;i++){
+      var t=e.results[i][0].transcript;
+      if(e.results[i].isFinal){fn+=t;ft+=t;}else{im+=t;}
+    }
+    var p=S.players[seat],ex=p.speeches.filter(function(s){return s.round!==-1;}).map(function(s){return'['+(s.phase==='day'?'白天':'夜晚')+(s.round?'R'+s.round:'')+'] '+s.text;}).join('\n');
+    document.getElementById('pspeech-'+seat).value=ex+(fn||im?'\n[🎤] '+ft+(im?'('+im+')':''));
+    var ta=document.getElementById('pspeech-'+seat);ta.scrollTop=ta.scrollHeight;
   };
-  rec.onerror=function(){showT('语音识别错误');var b=document.getElementById('pvo-'+seat);if(b){b.textContent='🎤识';b.classList.remove('recording');}window.__sr=null;brRec=null;};
-  rec.onend=function(){
-    if(ft.trim()){S.players[seat].spchs.push({round:S.round,phase:S.phase,text:ft.trim()});SG();var p2=S.players[seat];document.getElementById('ps-'+seat).value=p2.spchs.map(function(s){return'['+(s.phase==='day'?'白天':'夜晚')+'R'+s.round+'] '+s.text;}).join('\n');}
-    var b=document.getElementById('pvo-'+seat);if(b){b.textContent='🎤识';b.classList.remove('recording');}window.__sr=null;brRec=null;
+  _rec.onerror=function(e){showT('录音错误:'+e.error);var b=document.getElementById('prec-'+seat);if(b){b.textContent='🎤';b.classList.remove('recording');}_rec=null;_seat=null;};
+  _rec.onend=function(){
+    if(ft.trim()){S.players[seat].speeches.push({round:S.round,phase:S.phase,text:ft.trim()});SG();}
+    var b=document.getElementById('prec-'+seat);if(b){b.textContent='🎤';b.classList.remove('recording');}_rec=null;_seat=null;
   };
-  rec.start();
-  var b=document.getElementById('pvo-'+seat);if(b){b.textContent='⏹️';b.classList.add('recording');}
-  showT('🎤 识别 '+seat+'号发言...');
+  try{_rec.start();showT('🎤 录制 '+seat+'号...');}catch(e){showT('启动录音失败: 请授权麦克风');btn.textContent='🎤';btn.classList.remove('recording');_rec=null;_seat=null;}
 }
+function stopRec(){if(_rec){try{_rec.stop();}catch(e){}var b=document.getElementById('prec-'+_seat);if(b){b.textContent='🎤';b.classList.remove('recording');}_rec=null;_seat=null;}}
 
-// ===== 讯飞 STT =====
-function xfSTT(seat){
-  if(!S.xfAppid||!S.xfKey||!S.xfSecret){showT('讯飞三参数不全');return;}
-  showT('🎤 讯飞启动中...');
-  var btn=document.getElementById('pvo-'+seat);if(btn){btn.textContent='⏹️';btn.classList.add('recording');}
-  navigator.mediaDevices.getUserMedia({audio:{sampleRate:16000,channelCount:1,echoCancellation:true}}).then(function(stream){
-    var actx=new(window.AudioContext||window.webkitAudioContext)({sampleRate:16000});
-    var src=actx.createMediaStreamSource(stream);
-    var rc=actx.createScriptProcessor(4096,1,1);
-    var pcm=[];
-    rc.onaudioprocess=function(e){
-      var inp=e.inputBuffer.getChannelData(0);
-      var buf=new Int16Array(inp.length);
-      for(var i=0;i<inp.length;i++){var s=Math.max(-1,Math.min(1,inp[i]));buf[i]=s<0?s*0x8000:s*0x7FFF;}
-      pcm.push(buf);
-    };
-    src.connect(rc);rc.connect(actx.destination);
-    var stopFn=function(){
-      rc.disconnect();src.disconnect();stream.getTracks().forEach(function(t){t.stop();});
-      var tl=0;for(var i=0;i<pcm.length;i++)tl+=pcm[i].length;
-      var all=new Int16Array(tl);var off=0;for(var i=0;i<pcm.length;i++){all.set(pcm[i],off);off+=pcm[i].length;}
-      var btn2=document.getElementById('pvo-'+seat);if(btn2){btn2.textContent='⏳';btn2.classList.remove('recording');}
-      showT('⏳ 讯飞识别中...');
-      // Build WebSocket connection
-      var host='iat-api.xfyun.cn';
-      var dt=new Date().toGMTString();
-      // Note: full 讯飞 WS implementation requires Web Crypto API
-      // For now, fall back to browser STT
-      showT('讯飞 WebSocket 需要 HTTPS 环境，切换为浏览器识别');
-      if(btn2){btn2.textContent='🎤识';btn2.classList.remove('recording');btn2.onclick=function(){sSTT(seat);};}
-      // Use browser STT as fallback for now
-      brSTT(seat);
-    };
-    btn.onclick=stopFn;
-  }).catch(function(e){showT('麦克风:'+e.message);var b=document.getElementById('pvo-'+seat);if(b){b.textContent='🎤识';b.classList.remove('recording');b.onclick=function(){sSTT(seat);};}});
-}
-
-// ===== PROMPT =====
 function buildP(mode){
-  var w=isWolf(S.myRole);
+  var w=WOLF_NAMES.indexOf(S.myRole)>=0;
   var info='';
-  var sorted=Object.keys(S.players).map(Number).sort(function(a,b){return a-b;});
-  for(var si=0;si<sorted.length;si++){
-    var s=sorted[si],p=S.players[s],tag=s===S.mySeat?'(我)':'',nm=p.name?'('+p.name+')':'';
-    var rs='';
-    if(s===S.mySeat)rs='身份:'+S.myRole+(w?'(狼)':'(好人)');
-    else if(p.rStat==='confirmed')rs='身份:'+p.role+'(已确认)';
-    else if(p.rStat==='claimed')rs='自称:'+p.role+'(待验证)';
-    else rs='身份:未知';
-    var ds=p.deadR?'(R'+p.deadR+' '+p.deadC+')':'';
-    info+='【'+s+'号'+tag+nm+'】'+rs+'|'+(p.alive?'存活':'💀阵亡'+ds)+'\n';
-    if(p.spchs.length){for(var pi=0;pi<p.spchs.length;pi++){var sp=p.spchs[pi];if(sp.round===0)continue;info+='  发言[R'+sp.round+' '+sp.phase+']:'+sp.text+'\n';}}
-    else info+='  暂无发言\n';
+  var seats=Object.keys(S.players).map(Number).sort(function(a,b){return a-b;});
+  for(var i=0;i<seats.length;i++){
+    var s=seats[i],p=S.players[s];
+    if(p.speeches.length===0)continue;
+    var tag=s===S.mySeat?'(我)':'';var nm=p.name?'-'+p.name:'';
+    info+='【'+s+'号'+tag+nm+'】\n';
+    for(var j=0;j<p.speeches.length;j++){
+      var sp=p.speeches[j];
+      if(sp.round===0&&sp.phase==='manual')continue;
+      info+='  [R'+sp.round+' '+sp.phase+'] '+sp.text+'\n';
+    }
     info+='\n';
   }
   var votes=S.votes?'\n🗳️投票:\n'+S.votes+'\n':'';
   var deaths=S.deaths?'\n💀死讯:\n'+S.deaths+'\n':'';
   var notes=S.notes?'\n📝备注:\n'+S.notes+'\n':'';
-  var phases='请严格按照以下五阶段框架推理,每阶段都要输出:\n\n=== 阶段一:事实整理 ===\n列出存活/阵亡、死亡顺序、确认身份、投票信息、对立面。每条标【事实N】。\n\n=== 阶段二:逐人排查 ===\n每人:发言核心、逻辑链条、矛盾点、行为模式、身份推测、狼面⭐1~5\n\n=== 阶段三:关系网络 ===\n互保、对立、绑定、集火目标、被无视的人\n\n=== 阶段四:逻辑推演 ===\n假设验证(真预言家vs悍跳)、多套狼坑、排除法、时间线、穿衣服\n\n=== 阶段五:最终结论 ===\n最可能的狼坑、今天出谁、风险提示、发言关键词';
+  var phases='请严格按照以下五阶段框架推理,每阶段都要输出:\n=== 阶段一:事实整理 ===\n列出存活/阵亡、死亡顺序、确认身份、投票信息、对立面。每条标【事实N】。\n=== 阶段二:逐人排查 ===\n每人:发言核心、逻辑链条、矛盾点、行为模式、身份推测、狼面⭐1~5\n=== 阶段三:关系网络 ===\n互保、对立、绑定、集火目标、被无视的人\n=== 阶段四:逻辑推演 ===\n假设验证(真预言家vs悍跳)、多套狼坑、排除法、时间线、穿衣服\n=== 阶段五:最终结论 ===\n最可能的狼坑、今天出谁、风险提示、发言关键词';
   var sys,user;
   if(mode==='分析'){
     if(w){
@@ -638,72 +446,70 @@ function buildP(mode){
   return{sys:sys,user:user};
 }
 
-// ===== API CALL =====
 async function callDS(mode){
   var btnA=document.getElementById('btn-analyze'),btnS=document.getElementById('btn-speech');
   btnA.disabled=true;btnS.disabled=true;btnA.classList.add('loading');
   var out=document.getElementById('analysis-output');
   out.innerHTML='<div class="thinking">🧠 AI 推理中...</div>';
   var p=buildP(mode),model=S.model||'deepseek-chat';
+  var body={model:model,messages:[{role:'system',content:p.sys},{role:'user',content:p.user}],max_tokens:4096,stream:false};
+  if(model!=='deepseek-reasoner')body.temperature=0.6;
   try{
     var resp=await fetch('https://api.deepseek.com/chat/completions',{
-      method:'POST',
-      headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.apiKey},
-      body:JSON.stringify({model:model,messages:[{role:'system',content:p.sys},{role:'user',content:p.user}],temperature:model==='deepseek-reasoner'?undefined:0.6,max_tokens:4096}),
+      method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+S.apiKey},
+      body:JSON.stringify(body),
     });
-    if(!resp.ok){var e=await resp.text();throw new Error('HTTP '+resp.status+': '+e.substring(0,200));}
+    if(!resp.ok){var e=await resp.text();throw new Error('HTTP '+resp.status+': '+e.substring(0,300));}
     var data=await resp.json();
-    var result=data.choices[0].message.content;
-    out.innerHTML=result;
+    out.innerHTML=data.choices[0].message.content||'无输出';
     if(mode==='发言'){
-      var box=document.getElementById('ps-'+S.mySeat);
-      if(box){
-        box.value=box.value+'\n[🎯AI发言稿 R'+S.round+' '+S.phase+']\n'+result;
-        S.players[S.mySeat].spchs.push({round:S.round,phase:S.phase,text:'[AI发言稿] '+result.substring(0,500)});SG();
-      }
+      var ta=document.getElementById('pspeech-'+S.mySeat);
+      if(ta){var nc='\n[🎯AI发言 R'+S.round+' '+S.phase+']\n'+(data.choices[0].message.content||'').substring(0,1000);ta.value+=nc;S.players[S.mySeat].speeches.push({round:S.round,phase:S.phase,text:'[AI发言] '+(data.choices[0].message.content||'').substring(0,300)});SG();}
     }
-  }catch(e){out.innerHTML='<div style="color:var(--red)">❌ API失败:'+e.message+'<br>检查Key/网络/余额</div>';}
+  }catch(e){out.innerHTML='<div style="color:var(--red)">❌ 失败: '+e.message+'<br>检查API Key/余额/网络</div>';}
   btnA.disabled=false;btnS.disabled=false;btnA.classList.remove('loading');
 }
-function quickAnalysis(mode){
-  if(!S.apiKey){var k=LS('werewolf_apikey');if(k)S.apiKey=k;else{showT('请设置API Key');openSet();return;}}
-  callDS(mode);
-}
+function quickAnalysis(m){if(!S.apiKey){showT('请先在设置中配置 API Key');openSettings();return;}callDS(m);}
 
-// ===== SETTINGS =====
-function openSet(){
-  document.getElementById('m-model').value=S.model||'deepseek-reasoner';
-  document.getElementById('m-apikey').value=S.apiKey||LS('werewolf_apikey');
-  document.getElementById('m-voice-engine').value=S.voice||'browser';
-  document.getElementById('m-xf-appid').value=S.xfAppid||'';
-  document.getElementById('m-xf-apikey').value=S.xfKey||'';
-  document.getElementById('m-xf-apisecret').value=S.xfSecret||'';
+function openSettings(){
+  document.getElementById('m-round').value=S.round;
+  document.getElementById('m-apikey').value=S.apiKey||'';
   document.getElementById('m-wolf-teammates').value=S.wolfTees.join(',');
   document.getElementById('settings-modal').classList.add('show');
 }
-function closeSet(){document.getElementById('settings-modal').classList.remove('show');}
+function closeSettings(){document.getElementById('settings-modal').classList.remove('show');}
 function saveSettings(){
-  S.model=document.getElementById('m-model').value;LSS('werewolf_model',S.model);
-  var k=document.getElementById('m-apikey').value.trim();if(k){S.apiKey=k;LSS('werewolf_apikey',k);}
-  S.voice=document.getElementById('m-voice-engine').value;LSS('werewolf_voice',S.voice);
-  S.xfAppid=document.getElementById('m-xf-appid').value.trim();
-  S.xfKey=document.getElementById('m-xf-apikey').value.trim();
-  S.xfSecret=document.getElementById('m-xf-apisecret').value.trim();
-  if(S.xfAppid)LSS('werewolf_xfyun',JSON.stringify({appid:S.xfAppid,apikey:S.xfKey,apisecret:S.xfSecret}));
+  S.round=parseInt(document.getElementById('m-round').value);
+  var k=document.getElementById('m-apikey').value.trim();if(k)S.apiKey=k;
   var t=document.getElementById('m-wolf-teammates').value.trim();
-  S.wolfTees=t?t.split(',').map(function(s){return parseInt(s.trim());}).filter(function(n){return!isNaN(n);}):[];
-  SG();closeSet();showT('已保存');
-  var ml=document.getElementById('g-model-badge');if(ml)ml.textContent=S.model==='deepseek-reasoner'?'🧠 R1':'⚡V4';
-  document.getElementById('g-model-label').textContent=S.model==='deepseek-reasoner'?'(DeepSeek R1)':'(DeepSeek V4)';
+  S.wolfTees=t?t.split(',').map(function(s){return parseInt(s.trim());}).filter(function(n){return !isNaN(n);}):[];
+  var v=document.getElementById('g-votes');if(v)S.votes=v.value;
+  var d=document.getElementById('g-deaths');if(d)S.deaths=d.value;
+  var n=document.getElementById('g-notes');if(n)S.notes=n.value;
+  updRound();renderP();updBar();SG();closeSettings();showT('已保存');
 }
-function confirmRestart(){if(!confirm('结束对局清空发言记录?'))return;CG();document.getElementById('game-screen').style.display='none';document.getElementById('setup-screen').style.display='flex';document.getElementById('settings-btn').style.display='none';document.getElementById('btn-restore').style.display='none';document.getElementById('s-apikey').value=LS('werewolf_apikey');showT('已清空');}
+function resetGame(){
+  if(!confirm('确定重置所有数据?'))return;
+  CG();S={board:'',myRole:'',mySeat:0,totalPlayers:12,round:1,phase:'day',players:{},apiKey:'',wolfTees:[],gameStarted:false,model:'deepseek-chat',xfAppid:'',xfKey:'',xfSecret:'',audioBlobs:{},votes:'',deaths:'',notes:''};
+  document.getElementById('game-screen').style.display='none';
+  document.getElementById('setup-screen').style.display='flex';
+  document.getElementById('settings-btn').style.display='none';
+  document.getElementById('settings-modal').classList.remove('show');
+  document.getElementById('btn-restore').style.display='none';
+}
 
-// ===== TOAST =====
-function showT(m){var t=document.getElementById('toast');t.textContent=m;t.classList.add('show');setTimeout(function(){t.classList.remove('show');},3000);}
+// Track-wrap auto-save on input
+document.addEventListener('input',function(e){
+  if(e.target.id==='g-votes'||e.target.id==='g-deaths'||e.target.id==='g-notes'){
+    S.votes=document.getElementById('g-votes')?document.getElementById('g-votes').value:'';
+    S.deaths=document.getElementById('g-deaths')?document.getElementById('g-deaths').value:'';
+    S.notes=document.getElementById('g-notes')?document.getElementById('g-notes').value:'';
+    SG();
+  }
+});
 
-// ===== UNLOAD =====
-document.addEventListener('keydown',function(e){if(e.key==='Escape'&&window.__sr){try{window.__sr.stop();}catch(e){}window.__sr=null;}});
-window.addEventListener('beforeunload',function(){if(window.__sr){try{window.__sr.stop();}catch(e){}}SG();});
+document.addEventListener('keydown',function(e){if(e.key==='Escape'&&_rec){stopRec();showT('录音已停止');}});
+window.addEventListener('beforeunload',function(){if(_rec){try{_rec.stop();}catch(e){}}SG();});
 </script>
 </body>
 </html>
